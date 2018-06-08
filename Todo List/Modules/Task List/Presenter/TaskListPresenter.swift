@@ -8,6 +8,11 @@
 
 import Foundation
 
+
+//************************************************************************************
+// MARK: - Task List Presenter -
+//************************************************************************************
+
 class TaskListPresenter {
     
     // MARK: Properties
@@ -20,9 +25,11 @@ class TaskListPresenter {
     // MARK: - Privates
     
     private func loadTaskList() {
+        tableData.removeAll()
+        
         appDelegate.dataManager.fetchTasks { (tasks) in
             for task in tasks {
-                tableData.append(TaskCell.ViewModel(model: task))
+                self.tableData.append(TaskCell.ViewModel(model: task))
             }
             
             self.view.reload()
@@ -30,14 +37,27 @@ class TaskListPresenter {
     }
 }
 
+//************************************************************************************
+// MARK: - View Output -
+//************************************************************************************
+
 extension TaskListPresenter: TaskListViewOutput {
     
     func viewDidLoad() {
         loadTaskList()
     }
+    
+    func viewWillAppear() {
+        loadTaskList()
+    }
 }
 
+//************************************************************************************
+// MARK: - Table Data Source -
+//************************************************************************************
+
 extension TaskListPresenter: TableDataSource {
+    
     func getViewModel(by indexPath: IndexPath) -> TableViewModel {
         return tableData[indexPath.row]
     }

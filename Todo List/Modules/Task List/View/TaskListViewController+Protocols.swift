@@ -11,6 +11,7 @@ import Foundation
 // Output
 protocol TaskListViewOutput: class {
     func viewDidLoad()
+    func viewWillAppear()
 }
 
 // Input

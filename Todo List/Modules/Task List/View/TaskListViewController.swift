@@ -29,10 +29,17 @@ class TaskListViewController: UITableViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.viewWillAppear()
+    }
+    
     // MARK: - Privates
     
     private func setupDefaults() {
         func setupNavigation() {
+            title = "ToDo list"
             navigationController?.navigationBar.isTranslucent = false
             
             navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))]
@@ -50,7 +57,7 @@ class TaskListViewController: UITableViewController {
     // MARK: - Actions
     
     @objc private func addButtonTapped() {
-        
+        present(CreateTaskRouter.assembleModule(), animated: true, completion: nil)
     }
 }
 

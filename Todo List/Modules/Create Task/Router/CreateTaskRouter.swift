@@ -1,8 +1,8 @@
 //
-//  TaskListRouter.swift
+//  CreateTaskRouter.swift
 //  Todo List
 //
-//  Created by Sergey Melnik on 5/30/18.
+//  Created by Sergey Melnik on 5/31/18.
 //  Copyright © 2018 Sergey Melnik. All rights reserved.
 //
 
@@ -10,19 +10,18 @@ import UIKit
 
 
 //************************************************************************************
-// MARK: - Task List Router -
+// MARK: - Create Task Router -
 //************************************************************************************
 
-class TaskListRouter {
+class CreateTaskRouter {
     
     static func assembleModule() -> UIViewController {
-        let view = TaskListViewController()
-        let presenter = TaskListPresenter()
+        let view = CreateTaskViewController()
+        let presenter = CreateTaskPresenter()
         
         view.presenter = presenter
-        
         presenter.view = view
         
-        return UINavigationController(rootViewController: view)
+        return view
     }
 }
