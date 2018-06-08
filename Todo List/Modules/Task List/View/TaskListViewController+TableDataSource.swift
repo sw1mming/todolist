@@ -26,4 +26,18 @@ extension TaskListViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, indexPath in
+            let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
+            self.presenter.deleteTaskWith(id: viewModel.id!)
+        }
+        delete.backgroundColor = .lightGray
+        
+        return [delete]
+    }
 }

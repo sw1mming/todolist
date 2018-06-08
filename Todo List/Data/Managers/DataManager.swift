@@ -13,6 +13,8 @@ protocol DataManagerProtocol {
     func fetchTasks(with completion: (([TaskModel])->()))
     
     func save(task: TaskModel, with completion: (()->()))
+    
+    func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->())
 }
 
 class DataManager: DataManagerProtocol {
@@ -22,6 +24,10 @@ class DataManager: DataManagerProtocol {
     }
     
     func save(task: TaskModel, with completion: (()->())) {
+        fatalError("Override this method.")
+    }
+    
+    func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
         fatalError("Override this method.")
     }
 }

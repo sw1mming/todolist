@@ -12,6 +12,7 @@ import Foundation
 protocol TaskListViewOutput: class {
     func viewDidLoad()
     func viewWillAppear()
+    func deleteTaskWith(id: Int)
 }
 
 // Input

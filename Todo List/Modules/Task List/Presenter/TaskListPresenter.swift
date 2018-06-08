@@ -19,6 +19,8 @@ class TaskListPresenter {
     
     var view: TaskListViewInput!
     
+    var dataManager: DataManagerProtocol!
+    
     private var tableData: [TableViewModel] = []
     
     
@@ -27,7 +29,7 @@ class TaskListPresenter {
     private func loadTaskList() {
         tableData.removeAll()
         
-        appDelegate.dataManager.fetchTasks { (tasks) in
+        dataManager.fetchTasks { (tasks) in
             for task in tasks {
                 self.tableData.append(TaskCell.ViewModel(model: task))
             }
@@ -49,6 +51,17 @@ extension TaskListPresenter: TaskListViewOutput {
     
     func viewWillAppear() {
         loadTaskList()
+    }
+    
+    func deleteTaskWith(id: Int) {
+        dataManager.deleteTask(with: id) { (isCompleted) in
+            guard isCompleted else {
+                // ToDo: Display Error.
+                return
+            }
+            
+            self.loadTaskList()
+        }
     }
 }
 

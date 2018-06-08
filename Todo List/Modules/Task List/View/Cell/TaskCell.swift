@@ -30,10 +30,12 @@ extension TaskCell {
     class ViewModel: TableViewModel {
         var name: String?
         var icon: UIImage?
+        var id: Int?
         
         init(model: TaskModel) {
             name = model.name
             icon = model.icon
+            id = model.id
         }
     }
 }

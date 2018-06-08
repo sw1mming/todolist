@@ -22,6 +22,7 @@ class TaskListRouter {
         view.presenter = presenter
         
         presenter.view = view
+        presenter.dataManager = appDelegate.dataManager
         
         return UINavigationController(rootViewController: view)
     }

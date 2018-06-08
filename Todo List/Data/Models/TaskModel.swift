@@ -34,7 +34,7 @@ class TaskModel: NSObject, NSCoding {
     }
     
     public override init() {
-        
+        id = Int(arc4random_uniform(100*100))
     }
     
     public func encode(with aCoder: NSCoder) {

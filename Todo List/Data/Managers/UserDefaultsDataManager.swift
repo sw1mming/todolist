@@ -28,6 +28,20 @@ class UserDefaultsDataManager: DataManager {
         }
     }
     
+    override func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
+        loadTasksWith { tasks in
+            var result = tasks
+            
+            guard let index = result.enumerated().filter({ $0.element.id == id }).first?.offset else {
+                completion(false)
+                return
+            }
+            
+            result.remove(at: index)
+            self.save(tasks: result)
+            completion(true)
+        }
+    }
     
     // MARK: - Privates
     
