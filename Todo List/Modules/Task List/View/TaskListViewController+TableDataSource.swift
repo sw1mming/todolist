@@ -27,6 +27,10 @@ extension TaskListViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
@@ -44,5 +48,5 @@ extension TaskListViewController {
         }
         
         return UISwipeActionsConfiguration(actions: [action])
-    }    
+    }
 }

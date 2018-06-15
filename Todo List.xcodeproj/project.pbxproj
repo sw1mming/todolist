@@ -21,6 +21,7 @@
 		095870F520BFDEAE005A4D6F /* CreateTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F420BFDEAE005A4D6F /* CreateTaskRouter.swift */; };
 		095870F720BFDF00005A4D6F /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F620BFDF00005A4D6F /* CreateTaskViewController.swift */; };
 		095870F920BFDF2E005A4D6F /* CreateTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F820BFDF2E005A4D6F /* CreateTaskPresenter.swift */; };
+		096D5FC120D4060900DA8D59 /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D5FC020D4060900DA8D59 /* PushService.swift */; };
 		09E4EC5420C18FD900C67B45 /* CreateTaskViewController+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E4EC5320C18FD900C67B45 /* CreateTaskViewController+Protocols.swift */; };
 		09F01AEB20BEDFE800CB4F5F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F01AEA20BEDFE800CB4F5F /* DataManager.swift */; };
 		09F01AEE20BEE0A500CB4F5F /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F01AED20BEE0A500CB4F5F /* TaskModel.swift */; };
@@ -50,6 +51,7 @@
 		095870F420BFDEAE005A4D6F /* CreateTaskRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskRouter.swift; sourceTree = "<group>"; };
 		095870F620BFDF00005A4D6F /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		095870F820BFDF2E005A4D6F /* CreateTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskPresenter.swift; sourceTree = "<group>"; };
+		096D5FC020D4060900DA8D59 /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		09E4EC5320C18FD900C67B45 /* CreateTaskViewController+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTaskViewController+Protocols.swift"; sourceTree = "<group>"; };
 		09F01AEA20BEDFE800CB4F5F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		09F01AED20BEE0A500CB4F5F /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				09F01AEC20BEE09800CB4F5F /* Models */,
 				0953408F20BED3B500FCA5DD /* Managers */,
 				09F01B0520BEF5FD00CB4F5F /* TableDataSource.swift */,
+				096D5FC020D4060900DA8D59 /* PushService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				0953406F20BE92B000FCA5DD /* AppDelegate.swift in Sources */,
 				09F01B0420BEED0F00CB4F5F /* NSObject+StringFromClass.swift in Sources */,
 				095870F720BFDF00005A4D6F /* CreateTaskViewController.swift in Sources */,
+				096D5FC120D4060900DA8D59 /* PushService.swift in Sources */,
 				0953409520BEDB5800FCA5DD /* UserDefaultsDataManager.swift in Sources */,
 				0953408E20BED14C00FCA5DD /* TaskListViewController+Protocols.swift in Sources */,
 				0953408620BEC97700FCA5DD /* TaskListViewController.swift in Sources */,
@@ -469,13 +473,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RHLDAW8M28;
+				DEVELOPMENT_TEAM = JBHDL85HDG;
 				INFOPLIST_FILE = "Todo List/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Melnik.Todo-List";
+				PRODUCT_BUNDLE_IDENTIFIER = com.drivetag.drivetag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -487,13 +491,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RHLDAW8M28;
+				DEVELOPMENT_TEAM = JBHDL85HDG;
 				INFOPLIST_FILE = "Todo List/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Melnik.Todo-List";
+				PRODUCT_BUNDLE_IDENTIFIER = com.drivetag.drivetag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

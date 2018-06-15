@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import UserNotifications
 
 //************************************************************************************
 // MARK: - Create Task View -
@@ -57,6 +57,23 @@ class CreateTaskViewController: UIViewController {
         return button
     }()
     
+    private lazy var timeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Set notify time", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapTimeButton), for: .touchUpInside)
+        
+        return button
+    }()
+
+
+    private lazy var datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
+        return picker
+    }()
+
+    
     // MARK: - Properties
     
     var presenter: CreateTaskViewOutput!
@@ -83,18 +100,39 @@ class CreateTaskViewController: UIViewController {
         
         func setupTitleTextField() {
             view.addSubview(titleTextField)
-            titleTextField.addAnchor(top: navigationBar.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsetsMake(50, 20, 0, 20))
+            titleTextField.addAnchor(top: navigationBar.safeAreaLayoutGuide.bottomAnchor,
+                                     leading: view.leadingAnchor, trailing: view.trailingAnchor,
+                                     padding: UIEdgeInsetsMake(50, 20, 0, 20))
+        }
+        
+        func setupTimeButton() {
+            view.addSubview(timeButton)
+            timeButton.addAnchor(top: titleTextField.bottomAnchor,
+                                 leading: view.leadingAnchor, trailing: view.trailingAnchor,
+                                 padding: UIEdgeInsetsMake(30, 20, 0, 20), size: CGSize(width: 0, height: 40))
         }
         
         func setupConfirmButton() {
             view.addSubview(confirmButton)
-            confirmButton.addAnchor(top: titleTextField.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsetsMake(50, 20, 0, 20), size: CGSize(width: 0, height: 50))
+            confirmButton.addAnchor(top: timeButton.bottomAnchor,
+                                    leading: view.leadingAnchor, trailing: view.trailingAnchor,
+                                    padding: UIEdgeInsetsMake(50, 20, 0, 20), size: CGSize(width: 0, height: 50))
         }
         
         view.backgroundColor = .white
         setupNavigationBar()
         setupTitleTextField()
+        setupTimeButton()
         setupConfirmButton()
+    }
+    
+    private func handleAppearPicker() {
+        if datePicker.isDescendant(of: view) {
+            datePicker.removeFromSuperview()
+        } else {
+            view.addSubview(datePicker)
+            datePicker.addAnchor(bottom: view.bottomAnchor)
+        }
     }
     
     
@@ -104,12 +142,39 @@ class CreateTaskViewController: UIViewController {
         presenter.textDidChange(titleTextField.text)
     }
     
-    @objc private func didTapConfirmButton() {
+    @objc private func didTapConfirmButton(sender: UIButton) {
         presenter.createButtonWasTapped()
     }
     
     @objc private func dismissScreen() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func didTapTimeButton(sender: UIButton) {
+        view.endEditing(true)
+        handleAppearPicker()
+    }
+    
+    @objc private func dateDidChange(sender: UIDatePicker) {
+        handleAppearPicker()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "dd MMM yyyy, h:mm a"
+        timeButton.setTitle(dateFormatter.string(from: sender.date), for: .normal)
+        
+        // Move this code to Push service.
+        let content = UNMutableNotificationContent()
+        content.title = titleTextField.text ?? ""
+        
+        let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: sender.date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: "1", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            print()
+        }
     }
 }
 
