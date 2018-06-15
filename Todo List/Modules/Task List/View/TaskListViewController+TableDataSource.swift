@@ -27,17 +27,22 @@ extension TaskListViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
+        
+        let action = UIContextualAction(style: .normal, title: viewModel.isDone ? "Done" : "Un Done") { (action, view, nil) in            
+        }
+        
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, indexPath in
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
             self.presenter.deleteTaskWith(id: viewModel.id!)
         }
-        delete.backgroundColor = .lightGray
         
-        return [delete]
-    }
+        return UISwipeActionsConfiguration(actions: [action])
+    }    
 }

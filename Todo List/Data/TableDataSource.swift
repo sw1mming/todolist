@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TableDataSource {
+protocol TableDataSource: class {
     func getViewModel(by indexPath: IndexPath) -> TableViewModel
     func numberOfRows() -> Int
 }

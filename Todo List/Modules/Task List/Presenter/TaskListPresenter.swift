@@ -17,7 +17,7 @@ class TaskListPresenter {
     
     // MARK: Properties
     
-    var view: TaskListViewInput!
+    weak var view: TaskListViewInput!
     
     var dataManager: DataManagerProtocol!
     

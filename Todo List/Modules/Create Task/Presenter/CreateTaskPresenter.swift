@@ -15,9 +15,9 @@ import Foundation
 
 class CreateTaskPresenter {
     
-    var view: CreateTaskViewInput!
+    weak var view: CreateTaskViewInput!
     
-    private var taskData = (title: "", description: "")
+    private var taskData = (title: "", description: "")    
 }
 
 //************************************************************************************

@@ -63,7 +63,7 @@ class CreateTaskViewController: UIViewController {
     
     
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDefaults()

@@ -31,11 +31,13 @@ extension TaskCell {
         var name: String?
         var icon: UIImage?
         var id: Int?
+        var isDone = false
         
         init(model: TaskModel) {
             name = model.name
             icon = model.icon
             id = model.id
+            isDone = model.isDone
         }
     }
 }
