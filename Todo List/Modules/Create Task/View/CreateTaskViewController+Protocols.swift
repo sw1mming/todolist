@@ -13,6 +13,7 @@ protocol CreateTaskViewOutput: class {
     func viewDidLoad()
     func textDidChange(_ text: String?)
     func createButtonWasTapped()
+    func createNotificationWith(title: String?, date: Date)
 }
 
 // Input

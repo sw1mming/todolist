@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UserNotifications
 
 //************************************************************************************
 // MARK: - Create Task View -
@@ -59,7 +58,8 @@ class CreateTaskViewController: UIViewController {
     
     private lazy var timeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Set notify time", for: .normal)
+        button.setTitle(Strings.defaultTimeButtonTitle, for: .normal)
+        button.setTitle(Strings.selectedTimeButtonTitle, for: .selected)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(didTapTimeButton), for: .touchUpInside)
         
@@ -67,6 +67,12 @@ class CreateTaskViewController: UIViewController {
     }()
 
 
+    private var datePickerView: DatePickerView = {
+        let view = DatePickerView()
+//        view.delegate
+        return view
+    }()
+    
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
@@ -126,13 +132,15 @@ class CreateTaskViewController: UIViewController {
         setupConfirmButton()
     }
     
-    private func handleAppearPicker() {
+    private func handleAppearancePicker() {
         if datePicker.isDescendant(of: view) {
             datePicker.removeFromSuperview()
         } else {
             view.addSubview(datePicker)
             datePicker.addAnchor(bottom: view.bottomAnchor)
         }
+
+        timeButton.isSelected = !timeButton.isSelected
     }
     
     
@@ -152,29 +160,13 @@ class CreateTaskViewController: UIViewController {
     
     @objc private func didTapTimeButton(sender: UIButton) {
         view.endEditing(true)
-        handleAppearPicker()
+        handleAppearancePicker()
     }
     
     @objc private func dateDidChange(sender: UIDatePicker) {
-        handleAppearPicker()
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.dateFormat = "dd MMM yyyy, h:mm a"
-        timeButton.setTitle(dateFormatter.string(from: sender.date), for: .normal)
-        
-        // Move this code to Push service.
-        let content = UNMutableNotificationContent()
-        content.title = titleTextField.text ?? ""
-        
-        let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: sender.date)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-        
-        let request = UNNotificationRequest(identifier: "1", content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { (error) in
-            print()
-        }
+        handleAppearancePicker()
+        timeButton.setTitle(DateConverter.selected(sender.date), for: .normal)
+        presenter.createNotificationWith(title: titleTextField.text ?? String(), date: sender.date)
     }
 }
 

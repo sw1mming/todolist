@@ -41,4 +41,10 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
             view.close()
         }
     }
+    
+    func createNotificationWith(title: String?, date: Date) {
+        NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, completion: { isCompleted in
+            
+        })
+    }
 }
