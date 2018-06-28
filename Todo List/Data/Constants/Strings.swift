@@ -14,6 +14,7 @@ class Strings {
     static let defaultTimeButtonTitle = NSLocalizedString("Set notify time", comment: "")
     static let selectedTimeButtonTitle = NSLocalizedString("Cancel setting notify time", comment: "")
     static let emptyPushTitle = NSLocalizedString("Title is empty.", comment: "")
+    static let notificationAlertTitle = NSLocalizedString("Do you want to create notification for this task?", comment: "")
     
     // Date picker view
     static let doneButtonTitle = NSLocalizedString("Done", comment: "")

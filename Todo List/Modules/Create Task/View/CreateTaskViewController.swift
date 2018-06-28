@@ -65,20 +65,15 @@ class CreateTaskViewController: UIViewController {
         
         return button
     }()
-
-
-    private var datePickerView: DatePickerView = {
+    
+    
+    private lazy var datePickerView: DatePickerView = {
         let view = DatePickerView()
-//        view.delegate
+        view.delegate = self
+        
         return view
     }()
     
-    private lazy var datePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
-        return picker
-    }()
-
     
     // MARK: - Properties
     
@@ -86,7 +81,7 @@ class CreateTaskViewController: UIViewController {
     
     
     // MARK: - Life cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDefaults()
@@ -133,13 +128,13 @@ class CreateTaskViewController: UIViewController {
     }
     
     private func handleAppearancePicker() {
-        if datePicker.isDescendant(of: view) {
-            datePicker.removeFromSuperview()
+        if datePickerView.isDescendant(of: view) {
+            datePickerView.removeFromSuperview()
         } else {
-            view.addSubview(datePicker)
-            datePicker.addAnchor(bottom: view.bottomAnchor)
+            view.addSubview(datePickerView)
+            datePickerView.addAnchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         }
-
+        
         timeButton.isSelected = !timeButton.isSelected
     }
     
@@ -162,12 +157,6 @@ class CreateTaskViewController: UIViewController {
         view.endEditing(true)
         handleAppearancePicker()
     }
-    
-    @objc private func dateDidChange(sender: UIDatePicker) {
-        handleAppearancePicker()
-        timeButton.setTitle(DateConverter.selected(sender.date), for: .normal)
-        presenter.createNotificationWith(title: titleTextField.text ?? String(), date: sender.date)
-    }
 }
 
 //************************************************************************************
@@ -185,3 +174,21 @@ extension CreateTaskViewController: CreateTaskViewInput {
     }
 }
 
+//************************************************************************************
+// MARK: - View Input -
+//************************************************************************************
+
+extension CreateTaskViewController: DatePickerViewDelegate {
+    
+    func didTapDoneButton(date: Date) {
+        let alert = Alert(title: Strings.notificationAlertTitle,
+                          confirmClosure: { [weak self] in
+                            self?.handleAppearancePicker()
+                            self?.timeButton.setTitle(DateConverter.selected(date), for: .normal)
+                            self?.presenter.createNotificationWith(title: self!.titleTextField.text ?? String(), date: date)
+        },
+                          cancelClosure: {})
+        
+        present(alert, animated: true, completion: nil)
+    }
+}

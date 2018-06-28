@@ -8,49 +8,62 @@
 
 import UIKit
 
-protocol DatePickerDelegate {
-    func didTapDoneButton() -> Date
+protocol DatePickerViewDelegate {
+    func didTapDoneButton(date: Date)
 }
+
+//************************************************************************************
+// MARK: - Date Picker View -
+//************************************************************************************
 
 class DatePickerView: UIView {
     
-    var delegate: DatePickerDelegate?
+    // MARK: Properties
+    
+    var delegate: DatePickerViewDelegate?
     
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
+        
         return picker
     }()
     
     private lazy var doneButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.setTitle(Strings.doneButtonTitle, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        
         return button
     }()
 
+    
+    // MARK: - Life cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         setupViews()
     }
     
     private func setupViews() {
+        backgroundColor = UIColor.red.withAlphaComponent(0.5)
         addSubview(doneButton)
         doneButton.addAnchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor, size: CGSize(width: 0, height: 40))
         
         addSubview(datePicker)
         datePicker.addAnchor(top: doneButton.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor)
     }
-}
-
-
-extension DatePickerView: DatePickerDelegate {
     
-    @objc func didTapDoneButton() -> Date {
-        return datePicker.date
+    // MARK: - Selectors
+    
+    @objc func didTapDoneButton() {
+        delegate?.didTapDoneButton(date: datePicker.date)
     }
 }

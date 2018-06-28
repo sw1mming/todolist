@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		0932C42920DA862200B18333 /* NotificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932C42820DA862200B18333 /* NotificationBuilder.swift */; };
 		09337FAC20C1848D00419B1D /* UIView+AddAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09337FAB20C1848D00419B1D /* UIView+AddAnchor.swift */; };
-		093BF2CF20DD30B500629EFB /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093BF2CC20DD30B400629EFB /* Reachability.swift */; };
-		093BF2D020DD30B500629EFB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 093BF2CE20DD30B400629EFB /* Info.plist */; };
+		0943209120E5006B00587DE3 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943209020E5006B00587DE3 /* Alert.swift */; };
 		0953406F20BE92B000FCA5DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953406E20BE92B000FCA5DD /* AppDelegate.swift */; };
 		0953407120BE92B000FCA5DD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0953407020BE92B000FCA5DD /* ViewController.swift */; };
 		0953407420BE92B000FCA5DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0953407220BE92B000FCA5DD /* Main.storyboard */; };
@@ -43,9 +42,7 @@
 /* Begin PBXFileReference section */
 		0932C42820DA862200B18333 /* NotificationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBuilder.swift; sourceTree = "<group>"; };
 		09337FAB20C1848D00419B1D /* UIView+AddAnchor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddAnchor.swift"; sourceTree = "<group>"; };
-		093BF2CC20DD30B400629EFB /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
-		093BF2CD20DD30B400629EFB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		093BF2CE20DD30B400629EFB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0943209020E5006B00587DE3 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		0953406B20BE92B000FCA5DD /* Todo List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Todo List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0953406E20BE92B000FCA5DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0953407020BE92B000FCA5DD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,16 +94,6 @@
 			path = Push;
 			sourceTree = "<group>";
 		};
-		093BF2CB20DD30B400629EFB /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				093BF2CC20DD30B400629EFB /* Reachability.swift */,
-				093BF2CD20DD30B400629EFB /* Reachability.h */,
-				093BF2CE20DD30B400629EFB /* Info.plist */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
 		0953406220BE92AF00FCA5DD = {
 			isa = PBXGroup;
 			children = (
@@ -130,7 +117,6 @@
 				097842FF20E0CC74000D577A /* Helpers */,
 				09F01AEF20BEE18600CB4F5F /* Extensions */,
 				0953409120BED89700FCA5DD /* Data */,
-				093BF2CB20DD30B400629EFB /* Sources */,
 				0953408020BEC8FE00FCA5DD /* Modules */,
 				0953406E20BE92B000FCA5DD /* AppDelegate.swift */,
 				0953407020BE92B000FCA5DD /* ViewController.swift */,
@@ -264,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				09B9F1E620E2839F002BBA65 /* DatePickerView.swift */,
+				0943209020E5006B00587DE3 /* Alert.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -357,7 +344,6 @@
 				09F01AF620BEE58700CB4F5F /* TaskCell.xib in Resources */,
 				0953407920BE92B200FCA5DD /* LaunchScreen.storyboard in Resources */,
 				0953407620BE92B200FCA5DD /* Assets.xcassets in Resources */,
-				093BF2D020DD30B500629EFB /* Info.plist in Resources */,
 				0953407420BE92B000FCA5DD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,8 +372,8 @@
 				09F01AEB20BEDFE800CB4F5F /* DataManager.swift in Sources */,
 				095870F520BFDEAE005A4D6F /* CreateTaskRouter.swift in Sources */,
 				095870F920BFDF2E005A4D6F /* CreateTaskPresenter.swift in Sources */,
-				093BF2CF20DD30B500629EFB /* Reachability.swift in Sources */,
 				09E4EC5420C18FD900C67B45 /* CreateTaskViewController+Protocols.swift in Sources */,
+				0943209120E5006B00587DE3 /* Alert.swift in Sources */,
 				09F01AF420BEE3DA00CB4F5F /* TaskCell.swift in Sources */,
 				09F01AFB20BEEBEB00CB4F5F /* TaskListViewController+TableDataSource.swift in Sources */,
 				09F01AF820BEE80B00CB4F5F /* UIView+LoadFromNib.swift in Sources */,
