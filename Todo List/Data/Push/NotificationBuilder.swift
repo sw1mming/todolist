@@ -11,17 +11,23 @@ import UserNotifications
 
 class NotificationBuilder {
     
-    static func buildNotificationWith(title: String, date: Date, completion: @escaping (Bool)->()) {
+    static func buildNotificationWith(title: String, date: Date, identifier: String, completion: @escaping (Bool)->()) {
         let content = UNMutableNotificationContent()
         content.title = title
         
         let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: false)
         
-        let request = UNNotificationRequest(identifier: NSUUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
-            completion(error != nil)
+            DispatchQueue.main.async {
+                completion(error == nil)
+            }
         }
+    }
+    
+    static func deleteNotificationWith(id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
     }
 }

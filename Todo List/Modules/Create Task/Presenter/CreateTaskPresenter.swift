@@ -17,7 +17,11 @@ class CreateTaskPresenter {
     
     weak var view: CreateTaskViewInput!
     
-    private var taskData = (title: "", description: "")    
+    private var taskData = (title: "", description: "", identifier: "")
+    
+    var shouldShowDeleteButton: Bool {
+        return taskData.identifier.isEmpty
+    }
 }
 
 //************************************************************************************
@@ -26,12 +30,15 @@ class CreateTaskPresenter {
 
 extension CreateTaskPresenter: CreateTaskViewOutput {
     
-    func viewDidLoad() {}
+    func viewDidLoad() {
+        view.showDeleteNotificationButton(shouldShowDeleteButton)
+    }
     
     func textDidChange(_ text: String?) {
         let isEnabled = text?.isEmpty == false
         view.enableConfirmButton(isEnabled)
-        taskData = isEnabled ? (text!, "") : ("", "")
+        
+        taskData.title = text ?? String()
     }
     
     func createButtonWasTapped() {
@@ -41,10 +48,20 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
             view.close()
         }
     }
-    
+
     func createNotificationWith(title: String?, date: Date) {
-        NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, completion: { isCompleted in
-            
+        taskData.identifier = NSUUID().uuidString
+        
+        NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, identifier: taskData.identifier, completion: { [weak self] isCompleted in
+            if isCompleted {
+                self?.view.showDeleteNotificationButton(self!.shouldShowDeleteButton)
+            }
         })
+    }
+    
+    func deleteNotification() {
+        NotificationBuilder.deleteNotificationWith(id: taskData.identifier)
+        taskData.identifier = ""
+        view.showDeleteNotificationButton(shouldShowDeleteButton)
     }
 }

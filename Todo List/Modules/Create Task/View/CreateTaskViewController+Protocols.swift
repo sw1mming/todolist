@@ -14,10 +14,12 @@ protocol CreateTaskViewOutput: class {
     func textDidChange(_ text: String?)
     func createButtonWasTapped()
     func createNotificationWith(title: String?, date: Date)
+    func deleteNotification()
 }
 
 // Input
 protocol CreateTaskViewInput: class {
     func enableConfirmButton(_ isEnabled: Bool)
     func close()
+    func showDeleteNotificationButton(_ show: Bool)
 }

@@ -56,6 +56,15 @@ class CreateTaskViewController: UIViewController {
         return button
     }()
     
+    private lazy var notificationStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [timeButton, deleteNotificationButton])
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.alignment = .center
+        
+        return stack
+    }()
+    
     private lazy var timeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle(Strings.defaultTimeButtonTitle, for: .normal)
@@ -65,7 +74,16 @@ class CreateTaskViewController: UIViewController {
         
         return button
     }()
-    
+
+    private lazy var deleteNotificationButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "ic_close"), for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(didTapDeleteNotificationButton), for: .touchUpInside)
+        
+        return button
+    }()
+
     
     private lazy var datePickerView: DatePickerView = {
         let view = DatePickerView()
@@ -106,16 +124,16 @@ class CreateTaskViewController: UIViewController {
                                      padding: UIEdgeInsetsMake(50, 20, 0, 20))
         }
         
-        func setupTimeButton() {
-            view.addSubview(timeButton)
-            timeButton.addAnchor(top: titleTextField.bottomAnchor,
-                                 leading: view.leadingAnchor, trailing: view.trailingAnchor,
-                                 padding: UIEdgeInsetsMake(30, 20, 0, 20), size: CGSize(width: 0, height: 40))
+        func setupNotificationStackView() {
+            view.addSubview(notificationStackView)
+            notificationStackView.addAnchor(top: titleTextField.bottomAnchor,
+                                            leading: view.leadingAnchor, trailing: view.trailingAnchor,
+                                            padding: UIEdgeInsetsMake(30, 20, 0, 20), size: CGSize(width: 0, height: 40))
         }
         
         func setupConfirmButton() {
             view.addSubview(confirmButton)
-            confirmButton.addAnchor(top: timeButton.bottomAnchor,
+            confirmButton.addAnchor(top: notificationStackView.bottomAnchor,
                                     leading: view.leadingAnchor, trailing: view.trailingAnchor,
                                     padding: UIEdgeInsetsMake(50, 20, 0, 20), size: CGSize(width: 0, height: 50))
         }
@@ -123,7 +141,7 @@ class CreateTaskViewController: UIViewController {
         view.backgroundColor = .white
         setupNavigationBar()
         setupTitleTextField()
-        setupTimeButton()
+        setupNotificationStackView()
         setupConfirmButton()
     }
     
@@ -157,6 +175,10 @@ class CreateTaskViewController: UIViewController {
         view.endEditing(true)
         handleAppearancePicker()
     }
+    
+    @objc private func didTapDeleteNotificationButton(sender: UIButton) {
+        presenter.deleteNotification()
+    }
 }
 
 //************************************************************************************
@@ -171,6 +193,10 @@ extension CreateTaskViewController: CreateTaskViewInput {
     
     func close() {
         dismissScreen()
+    }
+    
+    func showDeleteNotificationButton(_ show: Bool) {
+        deleteNotificationButton.isHidden = show
     }
 }
 
