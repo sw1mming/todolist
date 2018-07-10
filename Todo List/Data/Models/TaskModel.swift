@@ -57,3 +57,12 @@ class TaskModel: NSObject, NSCoding {
         aCoder.encode(isDone, forKey: Key.isDone)
     }
 }
+
+extension TaskModel {
+    
+    func updateWith(_ task: TaskModel) {
+        name = task.name
+        icon = task.icon
+        isDone = task.isDone
+    }
+}

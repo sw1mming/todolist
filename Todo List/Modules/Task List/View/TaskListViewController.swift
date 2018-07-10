@@ -22,10 +22,6 @@ class TaskListViewController: UITableViewController {
     
     // MARK: - Life cycle
     
-    deinit {
-        print()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,5 +70,9 @@ extension TaskListViewController: TaskListViewInput {
     
     func reload() {
         tableView.reloadData()
+    }
+    
+    func show(error: String) {
+        present(Alert(title: error), animated: true, completion: nil)
     }
 }

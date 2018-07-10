@@ -35,7 +35,9 @@ extension TaskListViewController {
 
         let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
         
-        let action = UIContextualAction(style: .normal, title: viewModel.isDone ? "Done" : "Un Done") { (action, view, nil) in            
+        let action = UIContextualAction(style: .normal, title: viewModel.isDone ? "Done" : "Un Done") { [weak self] (action, view, nil) in
+            guard let id = viewModel.id else { return }
+            self?.presenter.checkmarkTaskWith(id, isDone: !viewModel.isDone)
         }
         
         return UISwipeActionsConfiguration(actions: [action])

@@ -29,7 +29,7 @@ class TaskListPresenter {
     private func loadTaskList() {
         tableData.removeAll()
         
-        dataManager.fetchTasks { [weak self] (tasks) in
+        dataManager.fetchTasks { [weak self] tasks in
             for task in tasks {
                 self?.tableData.append(TaskCell.ViewModel(model: task))
             }
@@ -61,6 +61,18 @@ extension TaskListPresenter: TaskListViewOutput {
             }
             
             self?.loadTaskList()
+        }
+    }
+    
+    func checkmarkTaskWith(_ id: Int, isDone: Bool) {
+        dataManager.fetchTaskWith(id: id) { [weak self] task in
+            guard let task = task else { return }
+            task.isDone = isDone
+            dataManager.update(task: task, with: { isCompleted in
+                isCompleted
+                    ? self?.loadTaskList()
+                    : self?.view.show(error: "Can't update your task.")
+            })
         }
     }
 }

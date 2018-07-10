@@ -13,9 +13,11 @@ protocol TaskListViewOutput: class {
     func viewDidLoad()
     func viewWillAppear()
     func deleteTaskWith(id: Int)
+    func checkmarkTaskWith(_ id: Int, isDone: Bool)
 }
 
 // Input
 protocol TaskListViewInput: class {
     func reload()
+    func show(error: String)
 }

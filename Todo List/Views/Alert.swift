@@ -25,4 +25,8 @@ class Alert: UIAlertController {
                                         cancelClosure()
         }))
     }
+    
+    convenience init(title: String?){
+        self.init(title: title, message: nil, preferredStyle: .alert)
+    }
 }

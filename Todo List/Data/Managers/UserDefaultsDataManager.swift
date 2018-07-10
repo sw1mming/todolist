@@ -43,6 +43,37 @@ class UserDefaultsDataManager: DataManager {
         }
     }
     
+    override func fetchTaskWith(id: Int, completion: ((TaskModel?) -> ())) {
+        loadTasksWith { (tasks) in
+            let task = tasks.filter({ $0.id == id }).first
+            completion(task)
+        }
+    }
+    
+    override func update(task: TaskModel, with completion: ((Bool) -> ())) {
+        guard let id = task.id else {
+            completion(false)
+            return
+        }
+
+        loadTasksWith { tasks in
+            var result = tasks
+            
+            guard let loadedTaskEnum = result.enumerated().filter({ $0.element.id == id }).first else {
+                completion(false)
+                return
+            }
+            
+            result.remove(at: loadedTaskEnum.offset)
+            loadedTaskEnum.element.updateWith(task)
+            result.insert(loadedTaskEnum.element, at: loadedTaskEnum.offset)
+            
+            self.save(tasks: result)
+            completion(true)
+        }
+
+    }
+    
     // MARK: - Privates
     
     private func loadTasksWith(completion: (([TaskModel])->())) {
