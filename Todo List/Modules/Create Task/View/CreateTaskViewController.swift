@@ -198,6 +198,10 @@ extension CreateTaskViewController: CreateTaskViewInput {
     func showDeleteNotificationButton(_ show: Bool) {
         deleteNotificationButton.isHidden = show
     }
+    
+    func resetNotification() {
+        timeButton.setTitle(Strings.defaultTimeButtonTitle, for: .normal)
+    }
 }
 
 //************************************************************************************

@@ -17,9 +17,11 @@ class CreateTaskPresenter {
     
     weak var view: CreateTaskViewInput!
     
+    var dataManager: DataManagerProtocol!
+    
     private var taskData = (title: "", description: "", identifier: "")
     
-    var shouldShowDeleteButton: Bool {
+    private var shouldShowDeleteButton: Bool {
         return taskData.identifier.isEmpty
     }
 }
@@ -44,7 +46,7 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
     func createButtonWasTapped() {
         let task = TaskModel()
         task.name = taskData.title
-        appDelegate.dataManager.save(task: task) {
+        dataManager.save(task: task) {
             view.close()
         }
     }
@@ -62,6 +64,7 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
     func deleteNotification() {
         NotificationBuilder.deleteNotificationWith(id: taskData.identifier)
         taskData.identifier = ""
-        view.showDeleteNotificationButton(shouldShowDeleteButton)
+        view.resetNotification()
+//        view.showDeleteNotificationButton(shouldShowDeleteButton)
     }
 }

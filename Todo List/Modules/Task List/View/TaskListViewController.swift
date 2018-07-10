@@ -22,6 +22,10 @@ class TaskListViewController: UITableViewController {
     
     // MARK: - Life cycle
     
+    deinit {
+        print()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

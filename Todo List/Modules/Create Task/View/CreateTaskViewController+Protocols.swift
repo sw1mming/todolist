@@ -22,4 +22,5 @@ protocol CreateTaskViewInput: class {
     func enableConfirmButton(_ isEnabled: Bool)
     func close()
     func showDeleteNotificationButton(_ show: Bool)
+    func resetNotification()
 }

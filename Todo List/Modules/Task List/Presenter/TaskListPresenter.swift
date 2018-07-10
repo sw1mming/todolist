@@ -29,12 +29,12 @@ class TaskListPresenter {
     private func loadTaskList() {
         tableData.removeAll()
         
-        dataManager.fetchTasks { (tasks) in
+        dataManager.fetchTasks { [weak self] (tasks) in
             for task in tasks {
-                self.tableData.append(TaskCell.ViewModel(model: task))
+                self?.tableData.append(TaskCell.ViewModel(model: task))
             }
             
-            self.view.reload()
+            self?.view.reload()
         }
     }
 }
@@ -54,13 +54,13 @@ extension TaskListPresenter: TaskListViewOutput {
     }
     
     func deleteTaskWith(id: Int) {
-        dataManager.deleteTask(with: id) { (isCompleted) in
+        dataManager.deleteTask(with: id) { [weak self] isCompleted in
             guard isCompleted else {
                 // ToDo: Display Error.
                 return
             }
             
-            self.loadTaskList()
+            self?.loadTaskList()
         }
     }
 }

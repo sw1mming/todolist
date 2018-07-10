@@ -20,7 +20,9 @@ class CreateTaskRouter {
         let presenter = CreateTaskPresenter()
         
         view.presenter = presenter
+        
         presenter.view = view
+        presenter.dataManager = appDelegate.dataManager
         
         return view
     }
