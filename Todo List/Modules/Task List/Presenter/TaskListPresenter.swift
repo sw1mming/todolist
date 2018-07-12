@@ -54,6 +54,11 @@ extension TaskListPresenter: TaskListViewOutput {
     }
     
     func deleteTaskWith(id: Int) {
+        dataManager.fetchTaskWith(id: id) { task in
+            guard let id = task?.notificationId else { return }
+            NotificationBuilder.deleteNotificationWith(id: id)
+        }
+        
         dataManager.deleteTask(with: id) { [weak self] isCompleted in
             guard isCompleted else {
                 // ToDo: Display Error.

@@ -46,6 +46,8 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
     func createButtonWasTapped() {
         let task = TaskModel()
         task.name = taskData.title
+        task.notificationId = taskData.identifier
+        
         dataManager.save(task: task) {
             view.close()
         }
@@ -65,6 +67,6 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
         NotificationBuilder.deleteNotificationWith(id: taskData.identifier)
         taskData.identifier = ""
         view.resetNotification()
-//        view.showDeleteNotificationButton(shouldShowDeleteButton)
+        view.showDeleteNotificationButton(shouldShowDeleteButton)
     }
 }
