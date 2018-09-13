@@ -95,7 +95,7 @@ class CreateTaskViewController: UIViewController {
     
     // MARK: - Properties
     
-    var presenter: CreateTaskViewOutput!
+    var presenter: (CreateTaskViewOutput & NotificationSettingsHandler)!
     
     
     // MARK: - Life cycle
@@ -173,7 +173,17 @@ class CreateTaskViewController: UIViewController {
     
     @objc private func didTapTimeButton(sender: UIButton) {
         view.endEditing(true)
-        handleAppearancePicker()
+//        handleAppearancePicker()
+//        let vc = UIStoryboard(name: NotificationSettingsViewController.className(), bundle: nil).instantiateInitialViewController()!//NotificationSettingsViewController
+//        vc.popoverPresentationController?.permittedArrowDirections = .unknown
+//        vc.popoverPresentationController?.sourceView = view
+//        vc.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50,
+//                                                              width: 300, height: 300)
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.modalTransitionStyle = .crossDissolve
+//        vc.present
+        present(NotificationSettingsRouter.assembleModuleWith(handler: presenter), animated: true)
+//        vc.permittedArrowDirections = UIPopoverArrowDirection.allZeros
     }
     
     @objc private func didTapDeleteNotificationButton(sender: UIButton) {
@@ -201,6 +211,10 @@ extension CreateTaskViewController: CreateTaskViewInput {
     
     func resetNotification() {
         timeButton.setTitle(Strings.defaultTimeButtonTitle, for: .normal)
+    }
+    
+    func displayTimeButton(title: String) {
+        timeButton.setTitle(title, for: .normal)
     }
 }
 

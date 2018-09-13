@@ -23,4 +23,6 @@ protocol CreateTaskViewInput: class {
     func close()
     func showDeleteNotificationButton(_ show: Bool)
     func resetNotification()
+    
+    func displayTimeButton(title: String)
 }

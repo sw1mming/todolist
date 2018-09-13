@@ -19,7 +19,13 @@ class CreateTaskPresenter {
     
     var dataManager: DataManagerProtocol!
     
+    deinit {
+        print()
+    }
+    
     private var taskData = (title: "", description: "", identifier: "")
+    
+    private var selectedDate: Date?
     
     private var shouldShowDeleteButton: Bool {
         return taskData.identifier.isEmpty
@@ -68,5 +74,13 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
         taskData.identifier = ""
         view.resetNotification()
         view.showDeleteNotificationButton(shouldShowDeleteButton)
+    }
+}
+
+extension CreateTaskPresenter: NotificationSettingsHandler {
+    
+    func didSet(date: Date) {
+        selectedDate = date
+        view.displayTimeButton(title: DateConverter.selected(date))
     }
 }
