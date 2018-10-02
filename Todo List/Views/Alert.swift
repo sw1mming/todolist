@@ -14,13 +14,13 @@ class Alert: UIAlertController {
         self.init(title: title, message: nil, preferredStyle: .alert)
         
         self.addAction(UIAlertAction(title: "YES",
-                                     style: UIAlertActionStyle.default,
+                                     style: .default,
                                      handler: { action in
                                         confirmClosure()
         }))
         
         self.addAction(UIAlertAction(title: "NO",
-                                     style: UIAlertActionStyle.default,
+                                     style: .default,
                                      handler: { action in
                                         cancelClosure()
         }))

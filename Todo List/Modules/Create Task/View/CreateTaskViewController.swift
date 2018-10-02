@@ -95,7 +95,7 @@ class CreateTaskViewController: UIViewController {
     
     // MARK: - Properties
     
-    var presenter: (CreateTaskViewOutput & NotificationSettingsHandler)!
+    var presenter: CreateTaskViewOutput!
     
     
     // MARK: - Life cycle
@@ -121,21 +121,21 @@ class CreateTaskViewController: UIViewController {
             view.addSubview(titleTextField)
             titleTextField.addAnchor(top: navigationBar.safeAreaLayoutGuide.bottomAnchor,
                                      leading: view.leadingAnchor, trailing: view.trailingAnchor,
-                                     padding: UIEdgeInsetsMake(50, 20, 0, 20))
+                                     padding: UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20))
         }
         
         func setupNotificationStackView() {
             view.addSubview(notificationStackView)
             notificationStackView.addAnchor(top: titleTextField.bottomAnchor,
                                             leading: view.leadingAnchor, trailing: view.trailingAnchor,
-                                            padding: UIEdgeInsetsMake(30, 20, 0, 20), size: CGSize(width: 0, height: 40))
+                                            padding: UIEdgeInsets(top: 30, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 40))
         }
         
         func setupConfirmButton() {
             view.addSubview(confirmButton)
             confirmButton.addAnchor(top: notificationStackView.bottomAnchor,
                                     leading: view.leadingAnchor, trailing: view.trailingAnchor,
-                                    padding: UIEdgeInsetsMake(50, 20, 0, 20), size: CGSize(width: 0, height: 50))
+                                    padding: UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 50))
         }
         
         view.backgroundColor = .white
@@ -145,16 +145,11 @@ class CreateTaskViewController: UIViewController {
         setupConfirmButton()
     }
     
-    private func handleAppearancePicker() {
-        if datePickerView.isDescendant(of: view) {
-            datePickerView.removeFromSuperview()
-        } else {
-            view.addSubview(datePickerView)
-            datePickerView.addAnchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        }
-        
+    private func showDatePicker() {
+        datePickerView.showPicker(on: view)
         timeButton.isSelected = !timeButton.isSelected
     }
+    
     
     
     // MARK: - Selectors
@@ -173,17 +168,7 @@ class CreateTaskViewController: UIViewController {
     
     @objc private func didTapTimeButton(sender: UIButton) {
         view.endEditing(true)
-//        handleAppearancePicker()
-//        let vc = UIStoryboard(name: NotificationSettingsViewController.className(), bundle: nil).instantiateInitialViewController()!//NotificationSettingsViewController
-//        vc.popoverPresentationController?.permittedArrowDirections = .unknown
-//        vc.popoverPresentationController?.sourceView = view
-//        vc.popoverPresentationController?.sourceRect = CGRect(x: 50, y: 50,
-//                                                              width: 300, height: 300)
-//        vc.modalPresentationStyle = .overCurrentContext
-//        vc.modalTransitionStyle = .crossDissolve
-//        vc.present
-        present(NotificationSettingsRouter.assembleModuleWith(handler: presenter), animated: true)
-//        vc.permittedArrowDirections = UIPopoverArrowDirection.allZeros
+        showDatePicker()
     }
     
     @objc private func didTapDeleteNotificationButton(sender: UIButton) {
@@ -227,7 +212,9 @@ extension CreateTaskViewController: DatePickerViewDelegate {
     func didTapDoneButton(date: Date) {
         let alert = Alert(title: Strings.notificationAlertTitle,
                           confirmClosure: { [weak self] in
-                            self?.handleAppearancePicker()
+                            guard let weakSelf = self else { return }
+                            weakSelf.showDatePicker()
+                            
                             self?.timeButton.setTitle(DateConverter.selected(date), for: .normal)
                             self?.presenter.createNotificationWith(title: self!.titleTextField.text ?? String(), date: date)
         },

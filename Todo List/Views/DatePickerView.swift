@@ -18,6 +18,8 @@ protocol DatePickerViewDelegate {
 
 class DatePickerView: UIView {
     
+    private let viewHeight: CGFloat = 256
+    
     // MARK: Properties
     
     var delegate: DatePickerViewDelegate?
@@ -51,6 +53,27 @@ class DatePickerView: UIView {
         
         setupViews()
     }
+    
+    func showPicker(on view: UIView) {
+        if isDescendant(of: view) {
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.frame.origin.y = view.frame.size.height
+                }, completion: { [weak self] _ in
+                    self?.removeFromSuperview()
+            })
+        } else {
+            view.addSubview(self)
+            frame.size = .init(width: view.frame.width, height: viewHeight)
+            frame.origin.y = view.frame.size.height
+            
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let weakSelf = self else { return }
+                weakSelf.frame.origin.y = weakSelf.frame.origin.y - weakSelf.viewHeight - view.safeAreaInsets.bottom
+            }
+        }
+    }
+
     
     private func setupViews() {
         backgroundColor = UIColor.red.withAlphaComponent(0.5)

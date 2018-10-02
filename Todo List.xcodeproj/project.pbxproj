@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09197DFF2107A685007A93DC /* NotificationSettingsViewController+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09197DFE2107A685007A93DC /* NotificationSettingsViewController+Protocols.swift */; };
 		0932C42920DA862200B18333 /* NotificationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932C42820DA862200B18333 /* NotificationBuilder.swift */; };
 		09337FAC20C1848D00419B1D /* UIView+AddAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09337FAB20C1848D00419B1D /* UIView+AddAnchor.swift */; };
 		0943209120E5006B00587DE3 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943209020E5006B00587DE3 /* Alert.swift */; };
@@ -24,10 +23,6 @@
 		095870F520BFDEAE005A4D6F /* CreateTaskRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F420BFDEAE005A4D6F /* CreateTaskRouter.swift */; };
 		095870F720BFDF00005A4D6F /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F620BFDF00005A4D6F /* CreateTaskViewController.swift */; };
 		095870F920BFDF2E005A4D6F /* CreateTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095870F820BFDF2E005A4D6F /* CreateTaskPresenter.swift */; };
-		095CCC2020FCD34B00CE8C68 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095CCC1F20FCD34B00CE8C68 /* NotificationSettingsViewController.swift */; };
-		095CCC2220FCD36400CE8C68 /* NotificationSettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 095CCC2120FCD36400CE8C68 /* NotificationSettingsViewController.storyboard */; };
-		095CCC2720FCE0E500CE8C68 /* NotificationSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095CCC2620FCE0E500CE8C68 /* NotificationSettingsPresenter.swift */; };
-		095CCC2920FCE0ED00CE8C68 /* NotificationSettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095CCC2820FCE0ED00CE8C68 /* NotificationSettingsRouter.swift */; };
 		096D5FC120D4060900DA8D59 /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D5FC020D4060900DA8D59 /* PushService.swift */; };
 		0978430120E0CCFB000D577A /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978430020E0CCFB000D577A /* DateConverter.swift */; };
 		09B9F1E420E27A32002BBA65 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B9F1E320E27A32002BBA65 /* Strings.swift */; };
@@ -45,7 +40,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		09197DFE2107A685007A93DC /* NotificationSettingsViewController+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationSettingsViewController+Protocols.swift"; sourceTree = "<group>"; };
 		0932C42820DA862200B18333 /* NotificationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBuilder.swift; sourceTree = "<group>"; };
 		09337FAB20C1848D00419B1D /* UIView+AddAnchor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddAnchor.swift"; sourceTree = "<group>"; };
 		0943209020E5006B00587DE3 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -64,10 +58,6 @@
 		095870F420BFDEAE005A4D6F /* CreateTaskRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskRouter.swift; sourceTree = "<group>"; };
 		095870F620BFDF00005A4D6F /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		095870F820BFDF2E005A4D6F /* CreateTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskPresenter.swift; sourceTree = "<group>"; };
-		095CCC1F20FCD34B00CE8C68 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
-		095CCC2120FCD36400CE8C68 /* NotificationSettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSettingsViewController.storyboard; sourceTree = "<group>"; };
-		095CCC2620FCE0E500CE8C68 /* NotificationSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsPresenter.swift; sourceTree = "<group>"; };
-		095CCC2820FCE0ED00CE8C68 /* NotificationSettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsRouter.swift; sourceTree = "<group>"; };
 		096D5FC020D4060900DA8D59 /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		0978430020E0CCFB000D577A /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		09B9F1E320E27A32002BBA65 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -141,7 +131,6 @@
 		0953408020BEC8FE00FCA5DD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				095CCC1E20FCD1C800CE8C68 /* Notification Settings */,
 				095870F020BFDE59005A4D6F /* Create Task */,
 				0953408120BEC90C00FCA5DD /* Task List */,
 			);
@@ -241,42 +230,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		095CCC1E20FCD1C800CE8C68 /* Notification Settings */ = {
-			isa = PBXGroup;
-			children = (
-				095CCC2520FCE0CB00CE8C68 /* Router */,
-				095CCC2420FCE0C400CE8C68 /* Presenter */,
-				095CCC2320FCE0BB00CE8C68 /* View */,
-			);
-			path = "Notification Settings";
-			sourceTree = "<group>";
-		};
-		095CCC2320FCE0BB00CE8C68 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				095CCC1F20FCD34B00CE8C68 /* NotificationSettingsViewController.swift */,
-				09197DFE2107A685007A93DC /* NotificationSettingsViewController+Protocols.swift */,
-				095CCC2120FCD36400CE8C68 /* NotificationSettingsViewController.storyboard */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		095CCC2420FCE0C400CE8C68 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				095CCC2620FCE0E500CE8C68 /* NotificationSettingsPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		095CCC2520FCE0CB00CE8C68 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				095CCC2820FCE0ED00CE8C68 /* NotificationSettingsRouter.swift */,
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
 		097842FF20E0CC74000D577A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +315,7 @@
 				TargetAttributes = {
 					0953406A20BE92B000FCA5DD = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -389,7 +343,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				095CCC2220FCD36400CE8C68 /* NotificationSettingsViewController.storyboard in Resources */,
 				09F01AF620BEE58700CB4F5F /* TaskCell.xib in Resources */,
 				0953407920BE92B200FCA5DD /* LaunchScreen.storyboard in Resources */,
 				0953407620BE92B200FCA5DD /* Assets.xcassets in Resources */,
@@ -408,7 +361,6 @@
 				0953407120BE92B000FCA5DD /* ViewController.swift in Sources */,
 				0953408C20BED11C00FCA5DD /* TaskListPresenter.swift in Sources */,
 				0953406F20BE92B000FCA5DD /* AppDelegate.swift in Sources */,
-				095CCC2920FCE0ED00CE8C68 /* NotificationSettingsRouter.swift in Sources */,
 				09F01B0420BEED0F00CB4F5F /* NSObject+StringFromClass.swift in Sources */,
 				095870F720BFDF00005A4D6F /* CreateTaskViewController.swift in Sources */,
 				096D5FC120D4060900DA8D59 /* PushService.swift in Sources */,
@@ -420,11 +372,9 @@
 				09337FAC20C1848D00419B1D /* UIView+AddAnchor.swift in Sources */,
 				09F01B0620BEF5FD00CB4F5F /* TableDataSource.swift in Sources */,
 				09F01AEB20BEDFE800CB4F5F /* DataManager.swift in Sources */,
-				09197DFF2107A685007A93DC /* NotificationSettingsViewController+Protocols.swift in Sources */,
 				095870F520BFDEAE005A4D6F /* CreateTaskRouter.swift in Sources */,
 				095870F920BFDF2E005A4D6F /* CreateTaskPresenter.swift in Sources */,
 				09E4EC5420C18FD900C67B45 /* CreateTaskViewController+Protocols.swift in Sources */,
-				095CCC2720FCE0E500CE8C68 /* NotificationSettingsPresenter.swift in Sources */,
 				0943209120E5006B00587DE3 /* Alert.swift in Sources */,
 				09F01AF420BEE3DA00CB4F5F /* TaskCell.swift in Sources */,
 				09F01AFB20BEEBEB00CB4F5F /* TaskListViewController+TableDataSource.swift in Sources */,
@@ -433,7 +383,6 @@
 				09F01AEE20BEE0A500CB4F5F /* TaskModel.swift in Sources */,
 				09F01AF120BEE21D00CB4F5F /* App+AppDelegate.swift in Sources */,
 				0953408A20BEC9BF00FCA5DD /* TaskListRouter.swift in Sources */,
-				095CCC2020FCD34B00CE8C68 /* NotificationSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,8 +516,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -584,7 +532,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aimprosoft.FirebaseTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -600,7 +548,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aimprosoft.FirebaseTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

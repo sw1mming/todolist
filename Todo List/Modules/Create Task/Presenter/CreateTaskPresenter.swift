@@ -76,11 +76,3 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
         view.showDeleteNotificationButton(shouldShowDeleteButton)
     }
 }
-
-extension CreateTaskPresenter: NotificationSettingsHandler {
-    
-    func didSet(date: Date) {
-        selectedDate = date
-        view.displayTimeButton(title: DateConverter.selected(date))
-    }
-}
