@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DatePickerViewDelegate {
+protocol DatePickerViewDelegate: class {
     func didTapDoneButton(date: Date)
 }
 
@@ -22,7 +22,7 @@ class DatePickerView: UIView {
     
     // MARK: Properties
     
-    var delegate: DatePickerViewDelegate?
+    weak var delegate: DatePickerViewDelegate?
     
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()

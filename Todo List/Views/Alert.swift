@@ -28,5 +28,9 @@ class Alert: UIAlertController {
     
     convenience init(title: String?){
         self.init(title: title, message: nil, preferredStyle: .alert)
+        
+        self.addAction(UIAlertAction(title: "OK",
+                                     style: .default,
+                                     handler: nil))
     }
 }

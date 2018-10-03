@@ -168,7 +168,7 @@ class CreateTaskViewController: UIViewController {
     
     @objc private func didTapTimeButton(sender: UIButton) {
         view.endEditing(true)
-        showDatePicker()
+        presenter.showDatePickerWasTapped()
     }
     
     @objc private func didTapDeleteNotificationButton(sender: UIButton) {
@@ -201,6 +201,14 @@ extension CreateTaskViewController: CreateTaskViewInput {
     func displayTimeButton(title: String) {
         timeButton.setTitle(title, for: .normal)
     }
+    
+    func displayDatePicker() {
+        showDatePicker()
+    }
+    
+    func displayAlert(with text: String) {
+        present(Alert(title: text), animated: true, completion: nil)
+    }
 }
 
 //************************************************************************************
@@ -215,8 +223,8 @@ extension CreateTaskViewController: DatePickerViewDelegate {
                             guard let weakSelf = self else { return }
                             weakSelf.showDatePicker()
                             
-                            self?.timeButton.setTitle(DateConverter.selected(date), for: .normal)
-                            self?.presenter.createNotificationWith(title: self!.titleTextField.text ?? String(), date: date)
+                            weakSelf.timeButton.setTitle(DateConverter.selected(date), for: .normal)
+                            weakSelf.presenter.createNotificationWith(title: weakSelf.titleTextField.text ?? String(), date: date)
         },
                           cancelClosure: {})
         

@@ -15,6 +15,7 @@ protocol CreateTaskViewOutput: class {
     func createButtonWasTapped()
     func createNotificationWith(title: String?, date: Date)
     func deleteNotification()
+    func showDatePickerWasTapped()
 }
 
 // Input
@@ -25,4 +26,6 @@ protocol CreateTaskViewInput: class {
     func resetNotification()
     
     func displayTimeButton(title: String)
+    func displayDatePicker()
+    func displayAlert(with text: String)
 }
