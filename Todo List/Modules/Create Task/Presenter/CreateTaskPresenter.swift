@@ -19,7 +19,7 @@ class CreateTaskPresenter {
     
     var dataManager: DataManagerProtocol!
     
-    private var taskData = (title: "", description: "", identifier: "")
+    private var taskData = (title: "", description: "", identifier: "", repeats: false)
     
     private var selectedDate: Date?
     
@@ -58,7 +58,7 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
     func createNotificationWith(title: String?, date: Date) {
         taskData.identifier = NSUUID().uuidString
         
-        NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, identifier: taskData.identifier, completion: { [weak self] isCompleted in
+        NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, identifier: taskData.identifier, repeats: taskData.repeats, completion: { [weak self] isCompleted in
             if isCompleted {
                 self?.view.showDeleteNotificationButton(self!.shouldShowDeleteButton)
             }
@@ -74,5 +74,9 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
     
     func showDatePickerWasTapped() {
         taskData.title.isEmpty ? view.displayAlert(with: Strings.enterTaskName) : view.displayDatePicker()
+    }
+    
+    func repeatSwithChanged(_ repeats: Bool) {
+        taskData.repeats = repeats
     }
 }

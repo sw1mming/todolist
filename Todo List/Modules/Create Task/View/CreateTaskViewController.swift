@@ -43,17 +43,6 @@ class CreateTaskViewController: UIViewController {
         return textField
     }()
     
-    private var confirmButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
-        button.setTitle("Save", for: .normal)
-        button.backgroundColor = .red
-        button.layer.cornerRadius = 10.0
-        button.isEnabled = false
-        
-        return button
-    }()
-    
     private lazy var notificationStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [timeButton, deleteNotificationButton])
         stack.axis = .horizontal
@@ -81,7 +70,31 @@ class CreateTaskViewController: UIViewController {
         
         return button
     }()
+    
+    private var confirmButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
+        button.setTitle("Save", for: .normal)
+        button.backgroundColor = .red
+        button.layer.cornerRadius = 10.0
+        button.isEnabled = false
+        
+        return button
+    }()
 
+    private var repeatTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Repeat every day?"
+        
+        return label
+    }()
+    
+    private var repeatSwitch: UISwitch = {
+        let newSwitch = UISwitch()
+        newSwitch.addTarget(self, action: #selector(repeatSwithChanged), for: .valueChanged)
+        
+        return newSwitch
+    }()
     
     private lazy var datePickerView: DatePickerView = {
         let view = DatePickerView()
@@ -130,9 +143,20 @@ class CreateTaskViewController: UIViewController {
                                             padding: UIEdgeInsets(top: 30, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 40))
         }
         
+        func setupRepeatSwitchWithLabel() {
+            view.addSubview(repeatTitleLabel)
+            repeatTitleLabel.addAnchor(top: notificationStackView.bottomAnchor,
+                                       leading: titleTextField.leadingAnchor,// trailing: <#T##NSLayoutXAxisAnchor?#>,
+                                       padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0))
+            
+            view.addSubview(repeatSwitch)
+            repeatSwitch.centerYAnchor.constraint(equalTo: repeatTitleLabel.centerYAnchor).isActive = true
+            repeatSwitch.addAnchor(trailing: titleTextField.trailingAnchor)
+        }
+        
         func setupConfirmButton() {
             view.addSubview(confirmButton)
-            confirmButton.addAnchor(top: notificationStackView.bottomAnchor,
+            confirmButton.addAnchor(top: repeatSwitch.bottomAnchor,
                                     leading: view.leadingAnchor, trailing: view.trailingAnchor,
                                     padding: UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 50))
         }
@@ -141,6 +165,7 @@ class CreateTaskViewController: UIViewController {
         setupNavigationBar()
         setupTitleTextField()
         setupNotificationStackView()
+        setupRepeatSwitchWithLabel()
         setupConfirmButton()
     }
     
@@ -172,6 +197,10 @@ class CreateTaskViewController: UIViewController {
     
     @objc private func didTapDeleteNotificationButton(sender: UIButton) {
         presenter.deleteNotification()
+    }
+    
+    @objc func repeatSwithChanged() {
+        presenter.repeatSwithChanged(repeatSwitch.isOn)
     }
 }
 

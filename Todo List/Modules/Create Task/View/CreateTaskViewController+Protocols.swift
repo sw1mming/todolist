@@ -16,6 +16,7 @@ protocol CreateTaskViewOutput: class {
     func createNotificationWith(title: String?, date: Date)
     func deleteNotification()
     func showDatePickerWasTapped()
+    func repeatSwithChanged(_ repeats: Bool)
 }
 
 // Input

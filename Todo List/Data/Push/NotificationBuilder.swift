@@ -11,12 +11,12 @@ import UserNotifications
 
 class NotificationBuilder {
     
-    static func buildNotificationWith(title: String, date: Date, identifier: String, completion: @escaping (Bool)->()) {
+    static func buildNotificationWith(title: String, date: Date, identifier: String, repeats: Bool, completion: @escaping (Bool)->()) {
         let content = UNMutableNotificationContent()
         content.title = title
         
         let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: repeats)
         
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
