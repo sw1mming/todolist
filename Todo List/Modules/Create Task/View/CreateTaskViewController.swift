@@ -38,10 +38,8 @@ class CreateTaskViewController: UIViewController {
         let textField = UITextField()
         textField.addTarget(self, action: #selector(textDidChanged), for: .editingChanged)
         textField.placeholder = "Enter name of task"
-        textField.borderStyle = .line
-        textField.layer.borderWidth = 1.0
-        textField.layer.borderColor = UIColor.black.cgColor
-        
+        textField.borderStyle = .roundedRect
+
         return textField
     }()
     
@@ -102,6 +100,7 @@ class CreateTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupDefaults()
         presenter.viewDidLoad()
     }
@@ -145,7 +144,7 @@ class CreateTaskViewController: UIViewController {
         setupConfirmButton()
     }
     
-    private func showDatePicker() {
+    private func triggerDatePicker() {
         datePickerView.showPicker(on: view)
         timeButton.isSelected = !timeButton.isSelected
     }
@@ -203,7 +202,7 @@ extension CreateTaskViewController: CreateTaskViewInput {
     }
     
     func displayDatePicker() {
-        showDatePicker()
+        triggerDatePicker()
     }
     
     func displayAlert(with text: String) {
@@ -218,14 +217,15 @@ extension CreateTaskViewController: CreateTaskViewInput {
 extension CreateTaskViewController: DatePickerViewDelegate {
     
     func didTapDoneButton(date: Date) {
+        func confirm() {
+            triggerDatePicker()
+            
+            timeButton.setTitle(DateConverter.selected(date), for: .normal)
+            presenter.createNotificationWith(title: titleTextField.text ?? String(), date: date)
+        }
+        
         let alert = Alert(title: Strings.notificationAlertTitle,
-                          confirmClosure: { [weak self] in
-                            guard let weakSelf = self else { return }
-                            weakSelf.showDatePicker()
-                            
-                            weakSelf.timeButton.setTitle(DateConverter.selected(date), for: .normal)
-                            weakSelf.presenter.createNotificationWith(title: weakSelf.titleTextField.text ?? String(), date: date)
-        },
+                          confirmClosure: { confirm() },
                           cancelClosure: {})
         
         present(alert, animated: true, completion: nil)
