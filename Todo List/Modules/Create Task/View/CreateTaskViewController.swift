@@ -24,7 +24,12 @@ class CreateTaskViewController: UIViewController {
         let button = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_close"), style: .plain, target: self, action: #selector(dismissScreen))
         button.tintColor = .white
         
+        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didTapConfirmButton))
+        saveButton.tintColor = .black
+        saveButton.isEnabled = false
+        
         item.setLeftBarButton(button, animated: true)
+        item.setRightBarButton(saveButton, animated: true)
         
         item.title = "Create task"
         
@@ -154,27 +159,17 @@ class CreateTaskViewController: UIViewController {
             repeatSwitch.addAnchor(trailing: titleTextField.trailingAnchor)
         }
         
-        func setupConfirmButton() {
-            view.addSubview(confirmButton)
-            confirmButton.addAnchor(top: repeatSwitch.bottomAnchor,
-                                    leading: view.leadingAnchor, trailing: view.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20), size: CGSize(width: 0, height: 50))
-        }
-        
         view.backgroundColor = .white
         setupNavigationBar()
         setupTitleTextField()
         setupNotificationStackView()
         setupRepeatSwitchWithLabel()
-        setupConfirmButton()
     }
     
     private func triggerDatePicker() {
         datePickerView.showPicker(on: view)
         timeButton.isSelected = !timeButton.isSelected
     }
-    
-    
     
     // MARK: - Selectors
     
@@ -211,7 +206,7 @@ class CreateTaskViewController: UIViewController {
 extension CreateTaskViewController: CreateTaskViewInput {
     
     func enableConfirmButton(_ isEnabled: Bool) {
-        confirmButton.isEnabled = isEnabled
+        navigationBar.topItem?.rightBarButtonItem?.isEnabled = isEnabled
     }
     
     func close() {
