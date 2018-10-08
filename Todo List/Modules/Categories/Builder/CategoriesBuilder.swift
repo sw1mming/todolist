@@ -15,6 +15,6 @@ class CategoriesBuilder {
 
         view.presenter = CategoriesPresenter(view: view, dataManager: appDelegate.dataManager)
         
-        return view
+        return UINavigationController(rootViewController: view)
     }
 }

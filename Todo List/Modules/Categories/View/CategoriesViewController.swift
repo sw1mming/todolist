@@ -34,6 +34,12 @@ class CategoriesViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     
     // MARK: - Privates
     
@@ -42,6 +48,7 @@ class CategoriesViewController: UIViewController {
             tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.className())
         }
         
+        navigationController?.navigationBar.isHidden = true
         setupTableView()
     }
 }

@@ -17,11 +17,22 @@ class TaskListPresenter {
     
     // MARK: Properties
     
-    weak var view: TaskListViewInput!
+    private weak var view: TaskListViewInput!
     
-    var dataManager: DataManagerProtocol!
+    private let dataManager: DataManagerProtocol
+    
+    private let categoryId: Int
     
     private var tableData: [TableViewModel] = []
+    
+    
+    // MARK: - Life cycle
+    
+    init(view: TaskListViewInput, dataManager: DataManagerProtocol, categoryId: Int) {
+        self.view = view
+        self.dataManager = dataManager
+        self.categoryId = categoryId
+    }
     
     
     // MARK: - Privates

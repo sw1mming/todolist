@@ -13,17 +13,12 @@ import UIKit
 // MARK: - Task List Router -
 //************************************************************************************
 
-class TaskListRouter {
+class TaskListBuilder {
     
-    static func assembleModule() -> UIViewController {
+    static func build(for categoryId: Int) -> UIViewController {
         let view = TaskListViewController()
-        let presenter = TaskListPresenter()
+        view.presenter = TaskListPresenter(view: view, dataManager: appDelegate.dataManager, categoryId: categoryId)
         
-        view.presenter = presenter
-        
-        presenter.view = view
-        presenter.dataManager = appDelegate.dataManager
-        
-        return UINavigationController(rootViewController: view)
+        return view
     }
 }

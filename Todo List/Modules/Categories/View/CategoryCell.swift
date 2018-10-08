@@ -54,13 +54,16 @@ extension CategoryCell {
     
     class ViewModel: TableViewModel {
         var title = ""
+        let id: Int
         
-        init(title: String) {
+        init(title: String, id: Int) {
             self.title = title
+            self.id = id
         }
         
         init(category: CategoryModel) {
             title = category.name
+            id = category.id
         }
     }
 }
