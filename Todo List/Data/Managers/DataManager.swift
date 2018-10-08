@@ -10,6 +10,14 @@ import Foundation
 
 protocol DataManagerProtocol {
     
+    // Categories
+    
+    func fetchCategories(with completion: (([CategoryModel])->()))
+    
+    func save(category: CategoryModel, with completion: (()->()))
+    
+    // Tasks
+
     func fetchTasks(with completion: (([TaskModel])->()))
     
     func fetchTaskWith(id: Int, completion: ((TaskModel?)->()))
@@ -23,6 +31,14 @@ protocol DataManagerProtocol {
 
 class DataManager: DataManagerProtocol {
     
+    func fetchCategories(with completion: (([CategoryModel])->())) {
+        fatalError("Override this method.")
+    }
+    
+    func save(category: CategoryModel, with completion: (()->())) {
+        fatalError("Override this method.")
+    }
+
     func fetchTasks(with completion: (([TaskModel])->())) {
         fatalError("Override this method.")
     }

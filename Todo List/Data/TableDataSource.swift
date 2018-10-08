@@ -13,6 +13,4 @@ protocol TableDataSource: class {
     func numberOfRows() -> Int
 }
 
-protocol TableViewModel {
-    
-}
+protocol TableViewModel {}

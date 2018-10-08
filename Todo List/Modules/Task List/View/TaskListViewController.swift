@@ -41,8 +41,10 @@ class TaskListViewController: UITableViewController {
         func setupNavigation() {
             title = "ToDo list"
             navigationController?.navigationBar.isTranslucent = false
+            let addTaskButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+            addTaskButton.tintColor = .black
             
-            navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))]
+            navigationItem.rightBarButtonItems = [addTaskButton]
         }
         
         func setupTableView() {

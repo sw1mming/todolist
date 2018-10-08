@@ -10,14 +10,33 @@ import Foundation
 
 class UserDefaultsDataManager: DataManager {
     
-    private final let TasksKey = "Tasks"
+    enum Key {
+        static let tasks = "tasks"
+        static let categories = "categories"
+    }
+    
+    override func save(category: CategoryModel, with completion: (() -> ())) {
+        loadCategoriesWith { [weak self] categories in
+            var result = categories
+            
+            result.append(category)
+            self?.save(categories: result)
+            completion()
+        }
+    }
+    
+    override func fetchCategories(with completion: (([CategoryModel]) -> ())) {
+        loadCategoriesWith { categories in
+            completion(categories)
+        }
+    }
     
     override func save(task: TaskModel, with completion: (()->())) {
-        loadTasksWith { (tasks) in
+        loadTasksWith { [weak self] tasks in
             var result = tasks
             
             result.append(task)
-            self.save(tasks: result)
+            self?.save(tasks: result)
             completion()
         }
     }
@@ -29,7 +48,7 @@ class UserDefaultsDataManager: DataManager {
     }
     
     override func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
-        loadTasksWith { tasks in
+        loadTasksWith { [weak self] tasks in
             var result = tasks
             
             guard let index = result.enumerated().filter({ $0.element.id == id }).first?.offset else {
@@ -38,7 +57,7 @@ class UserDefaultsDataManager: DataManager {
             }
             
             result.remove(at: index)
-            self.save(tasks: result)
+            self?.save(tasks: result)
             completion(true)
         }
     }
@@ -56,7 +75,7 @@ class UserDefaultsDataManager: DataManager {
             return
         }
 
-        loadTasksWith { tasks in
+        loadTasksWith { [weak self] tasks in
             var result = tasks
             
             guard let loadedTaskEnum = result.enumerated().filter({ $0.element.id == id }).first else {
@@ -68,7 +87,7 @@ class UserDefaultsDataManager: DataManager {
             loadedTaskEnum.element.updateWith(task)
             result.insert(loadedTaskEnum.element, at: loadedTaskEnum.offset)
             
-            self.save(tasks: result)
+            self?.save(tasks: result)
             completion(true)
         }
 
@@ -76,8 +95,10 @@ class UserDefaultsDataManager: DataManager {
     
     // MARK: - Privates
     
+    // MARK: Tasks
+    
     private func loadTasksWith(completion: (([TaskModel])->())) {
-        let data = UserDefaults.standard.object(forKey: TasksKey) as? NSData
+        let data = UserDefaults.standard.object(forKey: Key.tasks) as? NSData
         var tasksArray = [TaskModel]()
         
         if let tasks = data {
@@ -92,7 +113,29 @@ class UserDefaultsDataManager: DataManager {
     private func save(tasks: [TaskModel]) {
         let tasksData = NSKeyedArchiver.archivedData(withRootObject: tasks)
         
-        UserDefaults.standard.set(tasksData, forKey: TasksKey)
+        UserDefaults.standard.set(tasksData, forKey: Key.tasks)
+        UserDefaults.standard.synchronize()
+    }
+    
+    // MARK: Categories
+    
+    private func loadCategoriesWith(completion: (([CategoryModel])->())) {
+        let data = UserDefaults.standard.object(forKey: Key.categories) as? NSData
+        var categoriesArray = [CategoryModel]()
+        
+        if let tasks = data {
+            if let array = NSKeyedUnarchiver.unarchiveObject(with: tasks as Data) as? [CategoryModel] {
+                categoriesArray = array
+            }
+        }
+        
+        completion(categoriesArray)
+    }
+    
+    private func save(categories: [CategoryModel]) {
+        let tasksData = NSKeyedArchiver.archivedData(withRootObject: categories)
+        
+        UserDefaults.standard.set(tasksData, forKey: Key.categories)
         UserDefaults.standard.synchronize()
     }
 }

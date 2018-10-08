@@ -18,7 +18,7 @@ class TaskModel: NSObject, NSCoding {
         static let notificationId = "notificationId"
     }
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var name: String?
     
