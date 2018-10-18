@@ -8,14 +8,16 @@
 
 import Foundation
 
-class UserDefaultsDataManager: DataManager {
+class UserDefaultsDataManager: DataManagerProtocol {
     
     enum Key {
         static let tasks = "tasks"
         static let categories = "categories"
     }
     
-    override func save(category: CategoryModel, with completion: (() -> ())) {
+    var currentCategoryId: Int = 0
+    
+    func save(category: CategoryModel, with completion: (() -> ())) {
         loadCategoriesWith { [weak self] categories in
             var result = categories
             
@@ -25,13 +27,13 @@ class UserDefaultsDataManager: DataManager {
         }
     }
     
-    override func fetchCategories(with completion: (([CategoryModel]) -> ())) {
+    func fetchCategories(with completion: (([CategoryModel]) -> ())) {
         loadCategoriesWith { categories in
             completion(categories)
         }
     }
     
-    override func save(task: TaskModel, with completion: (()->())) {
+    func save(task: TaskModel, with completion: (()->())) {
         loadTasksWith { [weak self] tasks in
             var result = tasks
             
@@ -41,13 +43,20 @@ class UserDefaultsDataManager: DataManager {
         }
     }
     
-    override func fetchTasks(with completion: (([TaskModel])->())) {
+    func fetchTasks(of categoryId: Int, completion: (([TaskModel]) -> ())) {
+        loadCategoriesWith { categories in
+            guard let tasks = categories.filter({ $0.id == categoryId }).first?.tasks else { completion([]); return }
+            completion(tasks)
+        }
+    }
+    
+    func fetchTasks(with completion: (([TaskModel])->())) {
         loadTasksWith { (tasks) in
             completion(tasks)
         }
     }
     
-    override func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
+    func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
         loadTasksWith { [weak self] tasks in
             var result = tasks
             
@@ -62,14 +71,14 @@ class UserDefaultsDataManager: DataManager {
         }
     }
     
-    override func fetchTaskWith(id: Int, completion: ((TaskModel?) -> ())) {
+    func fetchTaskWith(id: Int, completion: ((TaskModel?) -> ())) {
         loadTasksWith { (tasks) in
             let task = tasks.filter({ $0.id == id }).first
             completion(task)
         }
     }
     
-    override func update(task: TaskModel, with completion: ((Bool) -> ())) {
+    func update(task: TaskModel, with completion: ((Bool) -> ())) {
         guard let id = task.id else {
             completion(false)
             return

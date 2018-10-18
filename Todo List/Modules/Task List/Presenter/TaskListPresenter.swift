@@ -40,13 +40,21 @@ class TaskListPresenter {
     private func loadTaskList() {
         tableData.removeAll()
         
-        dataManager.fetchTasks { [weak self] tasks in
+        dataManager.fetchTasks(of: categoryId) { [weak self] tasks in
             for task in tasks {
                 self?.tableData.append(TaskCell.ViewModel(model: task))
             }
             
             self?.view.reload()
         }
+        
+//        dataManager.fetchTasks { [weak self] tasks in
+//            for task in tasks {
+//                self?.tableData.append(TaskCell.ViewModel(model: task))
+//            }
+//
+//            self?.view.reload()
+//        }
     }
 }
 
@@ -56,9 +64,7 @@ class TaskListPresenter {
 
 extension TaskListPresenter: TaskListViewOutput {
     
-    func viewDidLoad() {
-        loadTaskList()
-    }
+    func viewDidLoad() {}
     
     func viewWillAppear() {
         loadTaskList()
