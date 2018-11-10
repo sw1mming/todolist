@@ -19,9 +19,17 @@ class CreateTaskPresenter {
     
     var dataManager: DataManagerProtocol!
     
+    var categoryId: Int!
+    
     private var taskData = (title: "", description: "", identifier: "", repeats: false)
     
     private var selectedDate: Date?
+    
+    init(view: CreateTaskViewInput, dataManager: DataManagerProtocol, categoryId: Int) {
+        self.view = view
+        self.dataManager = dataManager
+        self.categoryId = categoryId
+    }
     
     private var shouldShowDeleteButton: Bool {
         return taskData.identifier.isEmpty
@@ -49,10 +57,10 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
         let task = TaskModel()
         task.name = taskData.title
         task.notificationId = taskData.identifier
-        
-        dataManager.save(task: task) { [weak self] in
+
+        dataManager.save(task: task, for: categoryId) { [weak self] in
             self?.view.close()
-        }
+        }        
     }
 
     func createNotificationWith(title: String?, date: Date) {

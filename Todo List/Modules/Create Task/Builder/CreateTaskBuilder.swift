@@ -1,5 +1,5 @@
 //
-//  CreateTaskRouter.swift
+//  CreateTaskBuilder.swift
 //  Todo List
 //
 //  Created by Sergey Melnik on 5/31/18.
@@ -10,20 +10,17 @@ import UIKit
 
 
 //************************************************************************************
-// MARK: - Create Task Router -
+// MARK: - Create Task Builder -
 //************************************************************************************
 
-class CreateTaskRouter {
+class CreateTaskBuilder {
     
-    static func assembleModule() -> UIViewController {
+    static func build(categoryId: Int) -> UIViewController {
         let view = CreateTaskViewController()
-        let presenter = CreateTaskPresenter()
-        
-        view.presenter = presenter
-        
-        presenter.view = view
-        presenter.dataManager = appDelegate.dataManager
-        
+        view.presenter = CreateTaskPresenter(view: view,
+                                             dataManager: appDelegate.dataManager,
+                                             categoryId: categoryId)
+                
         return view
     }
 }

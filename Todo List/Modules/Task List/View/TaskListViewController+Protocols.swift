@@ -14,6 +14,7 @@ protocol TaskListViewOutput: class {
     func viewWillAppear()
     func deleteTaskWith(id: Int)
     func checkmarkTaskWith(_ id: Int, isDone: Bool)
+    func getCategoryId() -> Int
 }
 
 // Input

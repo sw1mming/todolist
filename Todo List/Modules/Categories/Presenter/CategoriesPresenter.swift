@@ -47,7 +47,7 @@ extension CategoriesPresenter: CategoriesViewOutput {
             }
             func setupDefaultCategories() {
                 DefaultCategoriesConfigurator.create().forEach({ category in
-                    self?.dataManager.save(category: category, with: {
+                    self?.dataManager.save(category: category, with: { _ in
                         fillTableData(with: category)
                     })
                 })

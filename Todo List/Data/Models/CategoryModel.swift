@@ -26,7 +26,7 @@ class CategoryModel: NSObject, NSCoding {
     
     var icon: UIImage?
     
-    var tasks: [TaskModel]?
+    var tasks = [TaskModel]()
     
     
     // MARK: - Life cycle
@@ -40,7 +40,7 @@ class CategoryModel: NSObject, NSCoding {
         name = aDecoder.decodeObject(forKey: Key.name) as? String ?? ""
         id = aDecoder.decodeInteger(forKey: Key.id)
         icon = aDecoder.decodeObject(forKey: Key.icon) as? UIImage
-        tasks = aDecoder.decodeObject(forKey: Key.tasks) as? [TaskModel]
+        tasks = aDecoder.decodeObject(forKey: Key.tasks) as? [TaskModel] ?? []
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -52,8 +52,6 @@ class CategoryModel: NSObject, NSCoding {
             aCoder.encode(iconValue, forKey: Key.icon)
         }
         
-        if let tasks = tasks {
-            aCoder.encode(tasks, forKey: Key.tasks)
-        }
+        aCoder.encode(tasks, forKey: Key.tasks)
     }
 }

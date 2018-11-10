@@ -15,15 +15,29 @@ class UserDefaultsDataManager: DataManagerProtocol {
         static let categories = "categories"
     }
     
-    var currentCategoryId: Int = 0
-    
-    func save(category: CategoryModel, with completion: (() -> ())) {
+    func save(category: CategoryModel, with completion: ((_ isCompleted: Bool) -> ())) {
         loadCategoriesWith { [weak self] categories in
             var result = categories
             
             result.append(category)
             self?.save(categories: result)
-            completion()
+            completion(true)
+        }
+    }
+    
+    func update(category: CategoryModel, with completion: ((_ isCompleted: Bool) -> ())) {
+        loadCategoriesWith { categories in
+            var result = categories
+            guard let index = categories.enumerated().filter({ $0.element.id == category.id }).first?.offset else {
+                completion(false)
+                return
+            }
+            
+            result.remove(at: index)
+            result.insert(category, at: index)
+            
+            save(categories: result)
+            completion(true)
         }
     }
     
@@ -33,12 +47,23 @@ class UserDefaultsDataManager: DataManagerProtocol {
         }
     }
     
-    func save(task: TaskModel, with completion: (()->())) {
-        loadTasksWith { [weak self] tasks in
-            var result = tasks
+    func fetchCategory(by id: Int, completion: ((CategoryModel) -> ())) {
+        loadCategoriesWith { categories in
+            guard let category = categories.filter({ $0.id == id }).first else {
+                print("Manager doesn't have category by \(id).")
+                return
+            }
             
-            result.append(task)
-            self?.save(tasks: result)
+            completion(category)
+        }
+    }
+    
+    func save(task: TaskModel, for categoryId: Int, with completion: (()->())) {
+        fetchCategories { categories in
+            let category = categories.filter({ $0.id == categoryId }).first
+            category?.tasks.append(task)
+            
+            save(categories: categories)
             completion()
         }
     }
@@ -56,18 +81,15 @@ class UserDefaultsDataManager: DataManagerProtocol {
         }
     }
     
-    func deleteTask(with id: Int, with completion: (_ isCompleted: Bool)->()) {
-        loadTasksWith { [weak self] tasks in
-            var result = tasks
-            
-            guard let index = result.enumerated().filter({ $0.element.id == id }).first?.offset else {
+    func deleteTask(with id: Int, categoryId: Int, with completion: (_ isCompleted: Bool)->()) {
+        fetchCategory(by: categoryId) { category in
+            guard let index = category.tasks.enumerated().filter({ $0.element.id == id }).first?.offset else {
                 completion(false)
                 return
             }
-            
-            result.remove(at: index)
-            self?.save(tasks: result)
-            completion(true)
+
+            category.tasks.remove(at: index)
+            update(category: category, with: completion)
         }
     }
     
@@ -142,9 +164,9 @@ class UserDefaultsDataManager: DataManagerProtocol {
     }
     
     private func save(categories: [CategoryModel]) {
-        let tasksData = NSKeyedArchiver.archivedData(withRootObject: categories)
+        let data = NSKeyedArchiver.archivedData(withRootObject: categories)
         
-        UserDefaults.standard.set(tasksData, forKey: Key.categories)
+        UserDefaults.standard.set(data, forKey: Key.categories)
         UserDefaults.standard.synchronize()
     }
 }

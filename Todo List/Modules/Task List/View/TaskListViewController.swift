@@ -49,6 +49,7 @@ class TaskListViewController: UITableViewController {
         }
         
         func setupTableView() {
+            tableView.tableFooterView = UIView()
             tableView.register(TaskCell.nib(), forCellReuseIdentifier: TaskCell.reuseIdentifier)
         }
         
@@ -60,7 +61,7 @@ class TaskListViewController: UITableViewController {
     // MARK: - Actions
     
     @objc private func addButtonTapped() {
-        present(CreateTaskRouter.assembleModule(), animated: true, completion: nil)
+        present(CreateTaskBuilder.build(categoryId: presenter.getCategoryId()), animated: true, completion: nil)
     }
 }
 

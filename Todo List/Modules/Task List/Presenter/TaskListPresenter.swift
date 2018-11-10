@@ -46,15 +46,7 @@ class TaskListPresenter {
             }
             
             self?.view.reload()
-        }
-        
-//        dataManager.fetchTasks { [weak self] tasks in
-//            for task in tasks {
-//                self?.tableData.append(TaskCell.ViewModel(model: task))
-//            }
-//
-//            self?.view.reload()
-//        }
+        }        
     }
 }
 
@@ -76,7 +68,7 @@ extension TaskListPresenter: TaskListViewOutput {
             NotificationBuilder.deleteNotificationWith(id: id)
         }
         
-        dataManager.deleteTask(with: id) { [weak self] isCompleted in
+        dataManager.deleteTask(with: id, categoryId: categoryId) { [weak self] isCompleted in
             guard isCompleted else {
                 // ToDo: Display Error.
                 return
@@ -96,6 +88,10 @@ extension TaskListPresenter: TaskListViewOutput {
                     : self?.view.show(error: "Can't update your task.")
             })
         }
+    }
+    
+    func getCategoryId() -> Int {
+        return categoryId
     }
 }
 

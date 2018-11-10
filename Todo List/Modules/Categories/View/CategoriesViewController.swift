@@ -45,6 +45,7 @@ class CategoriesViewController: UIViewController {
     
     private func setupDefaults() {
         func setupTableView() {
+            tableView.tableFooterView = UIView()
             tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.className())
         }
         
