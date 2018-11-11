@@ -45,20 +45,21 @@ extension CategoriesPresenter: CategoriesViewOutput {
             func fillTableData(with category: CategoryModel) {
                 tableData.append(CategoryCell.ViewModel(category: category))
             }
-            func setupDefaultCategories() {
+            func prepareDefaultCategories() {
                 DefaultCategoriesConfigurator.create().forEach({ category in
                     self?.dataManager.save(category: category, with: { _ in
                         fillTableData(with: category)
                     })
                 })
             }
-            func setupLoadedCategories() {
+            func prepareLoadedCategories() {
                 categories.forEach({ category in
                     fillTableData(with: category)
                 })
             }
-            
-            categories.isEmpty ? setupDefaultCategories() : setupLoadedCategories()
+
+            categories.isEmpty ? prepareDefaultCategories() : prepareLoadedCategories()
+            tableData.append(AddCategoryCell.ViewModel())
             self?.view.reload()
         }
     }

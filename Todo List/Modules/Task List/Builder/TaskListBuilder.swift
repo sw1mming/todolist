@@ -15,9 +15,10 @@ import UIKit
 
 class TaskListBuilder {
     
-    static func build(for categoryId: Int) -> UIViewController {
+    static func build(for categoryId: Int, categoryName: String) -> UIViewController {
         let view = TaskListViewController()
         view.presenter = TaskListPresenter(view: view, dataManager: appDelegate.dataManager, categoryId: categoryId)
+        view.title = categoryName
         
         return view
     }

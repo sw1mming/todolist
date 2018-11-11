@@ -37,6 +37,7 @@
 		09F01AFB20BEEBEB00CB4F5F /* TaskListViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F01AFA20BEEBEB00CB4F5F /* TaskListViewController+TableDataSource.swift */; };
 		09F01B0420BEED0F00CB4F5F /* NSObject+StringFromClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F01B0320BEED0E00CB4F5F /* NSObject+StringFromClass.swift */; };
 		09F01B0620BEF5FD00CB4F5F /* TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F01B0520BEF5FD00CB4F5F /* TableDataSource.swift */; };
+		DB9B4B1E219717BB00E0D213 /* AddCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9B4B1D219717BB00E0D213 /* AddCategoryCell.swift */; };
 		DBEFF703216A7ED400EAF5A5 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEFF702216A7ED400EAF5A5 /* CategoryModel.swift */; };
 		DBEFF705216A801E00EAF5A5 /* DefaultCategoriesConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEFF704216A801E00EAF5A5 /* DefaultCategoriesConfigurator.swift */; };
 		DBEFF70B216A8A9100EAF5A5 /* CategoriesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEFF70A216A8A9100EAF5A5 /* CategoriesBuilder.swift */; };
@@ -81,6 +82,7 @@
 		09F01AFA20BEEBEB00CB4F5F /* TaskListViewController+TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskListViewController+TableDataSource.swift"; sourceTree = "<group>"; };
 		09F01B0320BEED0E00CB4F5F /* NSObject+StringFromClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+StringFromClass.swift"; sourceTree = "<group>"; };
 		09F01B0520BEF5FD00CB4F5F /* TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSource.swift; sourceTree = "<group>"; };
+		DB9B4B1D219717BB00E0D213 /* AddCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryCell.swift; sourceTree = "<group>"; };
 		DBEFF702216A7ED400EAF5A5 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		DBEFF704216A801E00EAF5A5 /* DefaultCategoriesConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCategoriesConfigurator.swift; sourceTree = "<group>"; };
 		DBEFF70A216A8A9100EAF5A5 /* CategoriesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesBuilder.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				097842FF20E0CC74000D577A /* Helpers */,
 				09F01AEF20BEE18600CB4F5F /* Extensions */,
 				0953409120BED89700FCA5DD /* Data */,
+				09F01B0520BEF5FD00CB4F5F /* TableDataSource.swift */,
 				0953408020BEC8FE00FCA5DD /* Modules */,
 				0953406E20BE92B000FCA5DD /* AppDelegate.swift */,
 				0953407020BE92B000FCA5DD /* ViewController.swift */,
@@ -161,7 +164,7 @@
 			children = (
 				0953408220BEC94300FCA5DD /* View */,
 				0953408320BEC94A00FCA5DD /* Presenter */,
-				0953408420BEC95300FCA5DD /* Router */,
+				0953408420BEC95300FCA5DD /* Builder */,
 			);
 			path = "Task List";
 			sourceTree = "<group>";
@@ -185,12 +188,12 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		0953408420BEC95300FCA5DD /* Router */ = {
+		0953408420BEC95300FCA5DD /* Builder */ = {
 			isa = PBXGroup;
 			children = (
 				0953408920BEC9BF00FCA5DD /* TaskListBuilder.swift */,
 			);
-			path = Router;
+			path = Builder;
 			sourceTree = "<group>";
 		};
 		0953408F20BED3B500FCA5DD /* Managers */ = {
@@ -208,7 +211,6 @@
 				09B9F1E220E27A22002BBA65 /* Constants */,
 				09F01AEC20BEE09800CB4F5F /* Models */,
 				0953408F20BED3B500FCA5DD /* Managers */,
-				09F01B0520BEF5FD00CB4F5F /* TableDataSource.swift */,
 				0932C42720DA85FE00B18333 /* Push */,
 			);
 			path = Data;
@@ -304,6 +306,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		DB1B090E21978C030047461E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DBEFF713216A8BC100EAF5A5 /* CategoryCell.swift */,
+				DB9B4B1D219717BB00E0D213 /* AddCategoryCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		DBEFF706216A8A4500EAF5A5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,11 +344,11 @@
 		DBEFF709216A8A7300EAF5A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DB1B090E21978C030047461E /* Cells */,
 				DBEFF70E216A8AC600EAF5A5 /* CategoriesViewController.swift */,
 				DBF154C6216A9F47003135A1 /* CategoriesViewController+Protocols.swift */,
 				DBEFF715216A8E1200EAF5A5 /* CategoriesViewController+DataSource.swift */,
 				DBEFF710216A8AE000EAF5A5 /* CategoriesViewController.storyboard */,
-				DBEFF713216A8BC100EAF5A5 /* CategoryCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -429,6 +440,7 @@
 				09B9F1E720E2839F002BBA65 /* DatePickerView.swift in Sources */,
 				0932C42920DA862200B18333 /* NotificationBuilder.swift in Sources */,
 				0953409520BEDB5800FCA5DD /* UserDefaultsDataManager.swift in Sources */,
+				DB9B4B1E219717BB00E0D213 /* AddCategoryCell.swift in Sources */,
 				DBEFF714216A8BC100EAF5A5 /* CategoryCell.swift in Sources */,
 				0953408E20BED14C00FCA5DD /* TaskListViewController+Protocols.swift in Sources */,
 				0953408620BEC97700FCA5DD /* TaskListViewController.swift in Sources */,
