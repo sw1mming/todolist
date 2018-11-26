@@ -24,6 +24,8 @@ class CategoriesPresenter {
 
     private var tableData: [TableViewModel] = []
     
+    private var movedCategories = (isChanged: false, array: [CategoryModel]())
+    
     
     // MARK: - Life cycle
     
@@ -48,12 +50,12 @@ class CategoriesPresenter {
                 })
             }
             func prepareLoadedCategories() {
+                movedCategories.array = categories
                 categories.forEach({ category in
                     fillTableData(with: category)
                 })
             }
             
-            tableData.append(AddCategoryCell.ViewModel())
             categories.isEmpty ? prepareDefaultCategories() : prepareLoadedCategories()
             self?.view.reload()
         }
@@ -76,7 +78,8 @@ extension CategoriesPresenter: CategoriesViewOutput {
         dataManager.save(category: category) { [weak self] isCompleted in
             if isCompleted {
                 if let count = self?.tableData.count, count > 0 {
-                    self?.tableData.insert(CategoryCell.ViewModel(category: category), at: self!.tableData.startIndex + 1)
+                    self?.tableData.insert(CategoryCell.ViewModel(category: category), at: self!.tableData.startIndex)
+                    self?.movedCategories.array.insert(category, at: self!.tableData.startIndex)
                     self?.view.reload()
                 }
             } else {
@@ -94,6 +97,19 @@ extension CategoriesPresenter: CategoriesViewOutput {
                 // show error
             }
         }
+    }
+    
+    func move(fromIndexPath: IndexPath, toIndexPath: IndexPath) {
+        movedCategories.isChanged = true
+        let category = movedCategories.array[fromIndexPath.row]
+        movedCategories.array.remove(at: fromIndexPath.row)
+        movedCategories.array.insert(category, at: toIndexPath.row)
+    }
+    
+    func editedDoneButtonTapped() {
+        guard movedCategories.isChanged else { return }
+        movedCategories.isChanged = false
+        dataManager.save(categories: movedCategories.array)
     }
 }
 

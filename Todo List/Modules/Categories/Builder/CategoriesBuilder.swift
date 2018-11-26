@@ -11,10 +11,11 @@ import UIKit
 class CategoriesBuilder {
     
     static func build() -> UIViewController {
-        let view = UIStoryboard(name: CategoriesViewController.className(), bundle: nil).instantiateInitialViewController() as! CategoriesViewController
+        let navigation = UIStoryboard(name: CategoriesViewController.className(), bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let view = navigation.viewControllers.first as! CategoriesViewController
 
         view.presenter = CategoriesPresenter(view: view, dataManager: appDelegate.dataManager)
         
-        return UINavigationController(rootViewController: view)
+        return navigation
     }
 }

@@ -25,6 +25,13 @@ class UserDefaultsDataManager: DataManagerProtocol {
         }
     }
     
+    func save(categories: [CategoryModel]) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: categories)
+        
+        UserDefaults.standard.set(data, forKey: Key.categories)
+        UserDefaults.standard.synchronize()
+    }
+    
     func deleteCategoty(id: Int, with completion: ((_ isCompleted: Bool) -> ())) {
         loadCategoriesWith { categories in
             var result = categories
@@ -192,12 +199,5 @@ class UserDefaultsDataManager: DataManagerProtocol {
         }
         
         completion(categoriesArray)
-    }
-    
-    private func save(categories: [CategoryModel]) {
-        let data = NSKeyedArchiver.archivedData(withRootObject: categories)
-        
-        UserDefaults.standard.set(data, forKey: Key.categories)
-        UserDefaults.standard.synchronize()
     }
 }

@@ -18,6 +18,9 @@ protocol DataManagerProtocol {
     
     // Save new categoy.
     func save(category: CategoryModel, with completion: ((_ isCompleted: Bool)->()))
+
+    // Save categories after moving rows.
+    func save(categories: [CategoryModel])
     
     func deleteCategoty(id: Int, with completion: ((_ isCompleted: Bool) -> ()))
     

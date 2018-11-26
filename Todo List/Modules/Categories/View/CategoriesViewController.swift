@@ -34,24 +34,43 @@ class CategoriesViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
     
     // MARK: - Privates
     
     private func setupDefaults() {
         func setupTableView() {
             tableView.tableFooterView = UIView()
-            tableView.register(AddCategoryCell.self, forCellReuseIdentifier: AddCategoryCell.className())
             tableView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.className())
         }
         
-        navigationController?.navigationBar.isHidden = true
         setupTableView()
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func addButtonTapped(_ sender: Any) {
+        let alert = Alert(title: "Create new category",
+                          textFieldPlaceholder: "Enter name (required)",
+                          closure: { [weak self] text in self?.presenter.createNewCategoryWith(name: text) })
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+        
+        if !tableView.isEditing {
+            presenter.editedDoneButtonTapped()
+        }
+        
+        guard let items = navigationItem.rightBarButtonItems, items.count >= 2 else { return }
+        let editButtonIndex = 1
+        navigationItem.rightBarButtonItems?[editButtonIndex] = {
+            let button = UIBarButtonItem(barButtonSystemItem: tableView.isEditing ? .done : .edit,
+                                         target: self,
+                                         action: #selector(editButtonTapped))
+            button.tintColor = .black
+            return button
+        }()
     }
 }
 

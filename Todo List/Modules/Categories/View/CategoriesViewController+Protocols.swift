@@ -13,6 +13,8 @@ protocol CategoriesViewOutput {
     func viewDidLoad()
     func createNewCategoryWith(name: String)
     func deleteCategory(id: Int)
+    func move(fromIndexPath: IndexPath, toIndexPath: IndexPath)
+    func editedDoneButtonTapped()
 }
 
 // Input
