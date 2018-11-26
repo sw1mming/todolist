@@ -46,11 +46,13 @@ extension CategoriesViewController: UITableViewDelegate {
         
         switch presenter.getViewModel(by: indexPath) {
         case is AddCategoryCell.ViewModel:
-            print()
+            let alert = Alert(title: "Create new category",
+                              textFieldPlaceholder: "Enter name (required)",
+                              closure: { [weak self] text in self?.presenter.createNewCategoryWith(name: text) })
+            present(alert, animated: true, completion: nil)
         case let categoryViewModel as CategoryCell.ViewModel:
             navigationController?.pushViewController(TaskListBuilder.build(for: categoryViewModel.id,
-                                                                           categoryName: categoryViewModel.title),
-                                                     animated: true)
+                                                                           categoryName: categoryViewModel.title), animated: true)
         default: break }
     }
     
@@ -61,5 +63,26 @@ extension CategoriesViewController: UITableViewDelegate {
         case is CategoryCell.ViewModel:
             return CategoryCell.cellHeight
         default: return 0 }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, nil) in
+            guard let viewModel = self?.presenter.getViewModel(by: indexPath) as? CategoryCell.ViewModel else { return }
+            self?.presenter.deleteCategory(id: viewModel.id)
+        }
+        
+        let move = UIContextualAction(style: .normal, title: "Move?") { [weak self] (action, view, nil) in
+            self?.isEditing = !self!.isEditing
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete, move])
+    }
+
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print()
     }
 }

@@ -23,6 +23,8 @@ extension TaskListViewController {
         let viewModel = presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
         let cell = tableView.dequeueReusableCell(withIdentifier: TaskCell.reuseIdentifier, for: indexPath) as! TaskCell
         cell.nameLabel.text = viewModel.name
+        cell.dateLabel.text = viewModel.dateString
+        cell.indicatorImageView.image = UIImage(named: viewModel.isDone ? "ic_checkmark" : "ic_close")
         
         return cell
     }
@@ -32,23 +34,28 @@ extension TaskListViewController {
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-        let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
+        guard let viewModel = self.presenter.getViewModel(by: indexPath) as? TaskCell.ViewModel else { return nil }
         
-        let action = UIContextualAction(style: .normal, title: viewModel.isDone ? "Done" : "Un Done") { [weak self] (action, view, nil) in
+        let action = UIContextualAction(style: .normal, title: viewModel.isDone ? "Un Done" : "Done") { [weak self] (action, view, nil) in
             guard let id = viewModel.id else { return }
-            self?.presenter.checkmarkTaskWith(id, isDone: !viewModel.isDone)
+            
+            self?.presenter.checkmarkTaskWith(id, in: self!.presenter.getCategoryId(), isDone: !viewModel.isDone)
         }
         
         return UISwipeActionsConfiguration(actions: [action])
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            let viewModel = self.presenter.getViewModel(by: indexPath) as! TaskCell.ViewModel
-            self.presenter.deleteTaskWith(id: viewModel.id!)
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, nil) in
+            guard let viewModel = self?.presenter.getViewModel(by: indexPath) as? TaskCell.ViewModel,
+                  let id = viewModel.id else { return }
+            self?.presenter.deleteTaskWith(id: id)
         }
         
         return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

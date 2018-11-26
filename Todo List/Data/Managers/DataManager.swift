@@ -19,6 +19,8 @@ protocol DataManagerProtocol {
     // Save new categoy.
     func save(category: CategoryModel, with completion: ((_ isCompleted: Bool)->()))
     
+    func deleteCategoty(id: Int, with completion: ((_ isCompleted: Bool) -> ()))
+    
     func update(category: CategoryModel, with completion: ((_ isCompleted: Bool) -> ()))
     
     // Tasks
@@ -27,13 +29,13 @@ protocol DataManagerProtocol {
     
     func fetchTasks(with completion: (([TaskModel])->()))
     
-    func fetchTaskWith(id: Int, completion: ((TaskModel?)->()))
+    func fetchTaskWith(id: Int, from categoryId: Int, completion: ((TaskModel?) -> ()))
     
     func save(task: TaskModel, for categoryId: Int, with completion: (()->()))
     
     func deleteTask(with id: Int, categoryId: Int, with completion: (_ isCompleted: Bool)->())
     
-    func update(task: TaskModel, with completion: ((Bool)->()))
+    func update(task: TaskModel, in categoryId: Int, with completion: ((Bool)->()))
 }
 
 //class DataManager: DataManagerProtocol {

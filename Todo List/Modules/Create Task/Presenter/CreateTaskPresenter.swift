@@ -21,7 +21,7 @@ class CreateTaskPresenter {
     
     var categoryId: Int!
     
-    private var taskData = (title: "", description: "", identifier: "", repeats: false)
+    private var taskData: (title: String, description: String, identifier: String, repeats: Bool, date: Date?) = ("", "", "", false, nil)
     
     private var selectedDate: Date?
     
@@ -57,6 +57,7 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
         let task = TaskModel()
         task.name = taskData.title
         task.notificationId = taskData.identifier
+        task.date = taskData.date
 
         dataManager.save(task: task, for: categoryId) { [weak self] in
             self?.view.close()
@@ -65,7 +66,7 @@ extension CreateTaskPresenter: CreateTaskViewOutput {
 
     func createNotificationWith(title: String?, date: Date) {
         taskData.identifier = NSUUID().uuidString
-        
+        taskData.date = date
         NotificationBuilder.buildNotificationWith(title: title ?? Strings.emptyPushTitle, date: date, identifier: taskData.identifier, repeats: taskData.repeats, completion: { [weak self] isCompleted in
             if isCompleted {
                 self?.view.showDeleteNotificationButton(self!.shouldShowDeleteButton)

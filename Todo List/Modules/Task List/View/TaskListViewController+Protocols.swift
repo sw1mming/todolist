@@ -13,7 +13,7 @@ protocol TaskListViewOutput: class {
     func viewDidLoad()
     func viewWillAppear()
     func deleteTaskWith(id: Int)
-    func checkmarkTaskWith(_ id: Int, isDone: Bool)
+    func checkmarkTaskWith(_ id: Int, in categoryId: Int, isDone: Bool)
     func getCategoryId() -> Int
 }
 

@@ -18,6 +18,15 @@ class TaskCell: UITableViewCell {
     @IBOutlet weak var indicatorImageView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        indicatorImageView.image = nil
+        nameLabel.text = nil
+        dateLabel.text = nil
+    }
 }
 
 
@@ -32,12 +41,17 @@ extension TaskCell {
         var icon: UIImage?
         var id: Int?
         var isDone = false
+        var dateString: String?
         
         init(model: TaskModel) {
             name = model.name
             icon = model.icon
             id = model.id
             isDone = model.isDone
+            
+            if let date = model.date {
+                dateString = DateConverter.selected(date)
+            }
         }
     }
 }

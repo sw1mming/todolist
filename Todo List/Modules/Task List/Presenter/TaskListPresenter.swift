@@ -63,7 +63,7 @@ extension TaskListPresenter: TaskListViewOutput {
     }
     
     func deleteTaskWith(id: Int) {
-        dataManager.fetchTaskWith(id: id) { task in
+        dataManager.fetchTaskWith(id: id, from: categoryId) { task in
             guard let id = task?.notificationId else { return }
             NotificationBuilder.deleteNotificationWith(id: id)
         }
@@ -78,11 +78,11 @@ extension TaskListPresenter: TaskListViewOutput {
         }
     }
     
-    func checkmarkTaskWith(_ id: Int, isDone: Bool) {
-        dataManager.fetchTaskWith(id: id) { [weak self] task in
+    func checkmarkTaskWith(_ id: Int, in categoryId: Int, isDone: Bool) {
+        dataManager.fetchTaskWith(id: id, from: categoryId) { [weak self] task in
             guard let task = task else { return }
             task.isDone = isDone
-            dataManager.update(task: task, with: { isCompleted in
+            dataManager.update(task: task, in: categoryId, with: { isCompleted in
                 isCompleted
                     ? self?.loadTaskList()
                     : self?.view.show(error: "Can't update your task.")

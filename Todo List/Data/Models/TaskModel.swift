@@ -16,6 +16,7 @@ class TaskModel: NSObject, NSCoding {
         static let icon = "icon"
         static let isDone = "isDone"
         static let notificationId = "notificationId"
+        static let date = "date"
     }
     
     // MARK: - Properties
@@ -30,6 +31,8 @@ class TaskModel: NSObject, NSCoding {
     
     var notificationId: String?
     
+    var date: Date?
+    
     
     // MARK: - Life cycle
     
@@ -39,6 +42,7 @@ class TaskModel: NSObject, NSCoding {
         icon = aDecoder.decodeObject(forKey: Key.icon) as? UIImage
         isDone = aDecoder.decodeBool(forKey: Key.isDone)
         notificationId = aDecoder.decodeObject(forKey: Key.notificationId) as? String
+        date = aDecoder.decodeObject(forKey: Key.date) as? Date
     }
     
     public override init() {
@@ -63,6 +67,10 @@ class TaskModel: NSObject, NSCoding {
         if let notificationIdValue = notificationId {
             aCoder.encode(notificationIdValue, forKey: Key.notificationId)
         }
+        
+        if let dateValue = date {
+            aCoder.encode(dateValue, forKey: Key.date)
+        }
     }
 }
 
@@ -73,5 +81,6 @@ extension TaskModel {
         icon = task.icon
         isDone = task.isDone
         notificationId = task.notificationId
+        date = task.date
     }
 }

@@ -31,16 +31,11 @@ class CategoriesPresenter {
         self.view = view
         self.dataManager = dataManager
     }
-}
-
-
-//************************************************************************************
-// MARK: - View Output -
-//************************************************************************************
-
-extension CategoriesPresenter: CategoriesViewOutput {
     
-    func viewDidLoad() {
+    
+    // MARK: - Privates
+    
+    private func loadCategoties() {
         dataManager.fetchCategories { [weak self] categories in
             func fillTableData(with category: CategoryModel) {
                 tableData.append(CategoryCell.ViewModel(category: category))
@@ -57,10 +52,47 @@ extension CategoriesPresenter: CategoriesViewOutput {
                     fillTableData(with: category)
                 })
             }
-
-            categories.isEmpty ? prepareDefaultCategories() : prepareLoadedCategories()
+            
             tableData.append(AddCategoryCell.ViewModel())
+            categories.isEmpty ? prepareDefaultCategories() : prepareLoadedCategories()
             self?.view.reload()
+        }
+    }
+}
+
+
+//************************************************************************************
+// MARK: - View Output -
+//************************************************************************************
+
+extension CategoriesPresenter: CategoriesViewOutput {
+
+    func viewDidLoad() {
+        loadCategoties()
+    }
+    
+    func createNewCategoryWith(name: String) {
+        let category = CategoryModel(title: name)
+        dataManager.save(category: category) { [weak self] isCompleted in
+            if isCompleted {
+                if let count = self?.tableData.count, count > 0 {
+                    self?.tableData.insert(CategoryCell.ViewModel(category: category), at: self!.tableData.startIndex + 1)
+                    self?.view.reload()
+                }
+            } else {
+                // show error
+            }
+        }
+    }
+    
+    func deleteCategory(id: Int) {
+        dataManager.deleteCategoty(id: id) { [weak self] isCompleted in
+            if isCompleted {
+                self?.tableData.removeAll()
+                self?.loadCategoties()
+            } else {
+                // show error
+            }
         }
     }
 }

@@ -18,9 +18,24 @@ class UserDefaultsDataManager: DataManagerProtocol {
     func save(category: CategoryModel, with completion: ((_ isCompleted: Bool) -> ())) {
         loadCategoriesWith { [weak self] categories in
             var result = categories
+            result.count > 0 ? result.insert(category, at: result.startIndex) : result.append(category)
             
-            result.append(category)
             self?.save(categories: result)
+            completion(true)
+        }
+    }
+    
+    func deleteCategoty(id: Int, with completion: ((_ isCompleted: Bool) -> ())) {
+        loadCategoriesWith { categories in
+            var result = categories
+            guard let index = categories.enumerated().filter({ $0.element.id == id }).first?.offset else {
+                completion(false)
+                return
+            }
+            
+            result.remove(at: index)
+            
+            save(categories: result)
             completion(true)
         }
     }
@@ -93,21 +108,21 @@ class UserDefaultsDataManager: DataManagerProtocol {
         }
     }
     
-    func fetchTaskWith(id: Int, completion: ((TaskModel?) -> ())) {
-        loadTasksWith { (tasks) in
-            let task = tasks.filter({ $0.id == id }).first
+    func fetchTaskWith(id: Int, from categoryId: Int, completion: ((TaskModel?) -> ())) {
+        fetchCategory(by: categoryId) { category in
+            let task = category.tasks.filter({ $0.id == id }).first
             completion(task)
         }
     }
     
-    func update(task: TaskModel, with completion: ((Bool) -> ())) {
+    func update(task: TaskModel, in categoryId: Int, with completion: ((Bool)->())) {
         guard let id = task.id else {
             completion(false)
             return
         }
 
-        loadTasksWith { [weak self] tasks in
-            var result = tasks
+        fetchCategory(by: categoryId) { category in
+            var result = category.tasks
             
             guard let loadedTaskEnum = result.enumerated().filter({ $0.element.id == id }).first else {
                 completion(false)
@@ -118,9 +133,25 @@ class UserDefaultsDataManager: DataManagerProtocol {
             loadedTaskEnum.element.updateWith(task)
             result.insert(loadedTaskEnum.element, at: loadedTaskEnum.offset)
             
-            self?.save(tasks: result)
-            completion(true)
+            category.tasks = result
+            update(category: category, with: completion)
         }
+        
+//        loadTasksWith { [weak self] tasks in
+//            var result = tasks
+//
+//            guard let loadedTaskEnum = result.enumerated().filter({ $0.element.id == id }).first else {
+//                completion(false)
+//                return
+//            }
+//
+//            result.remove(at: loadedTaskEnum.offset)
+//            loadedTaskEnum.element.updateWith(task)
+//            result.insert(loadedTaskEnum.element, at: loadedTaskEnum.offset)
+//
+//            self?.save(tasks: result)
+//            completion(true)
+//        }
 
     }
     

@@ -11,6 +11,8 @@ import Foundation
 // Output
 protocol CategoriesViewOutput {
     func viewDidLoad()
+    func createNewCategoryWith(name: String)
+    func deleteCategory(id: Int)
 }
 
 // Input
