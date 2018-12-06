@@ -69,9 +69,7 @@ class CategoriesPresenter {
 
 extension CategoriesPresenter: CategoriesViewOutput {
 
-    func viewDidLoad() {
-        loadCategoties()
-    }
+    func viewDidLoad() { loadCategoties() }
     
     func createNewCategoryWith(name: String) {
         let category = CategoryModel(title: name)
@@ -101,9 +99,9 @@ extension CategoriesPresenter: CategoriesViewOutput {
     
     func move(fromIndexPath: IndexPath, toIndexPath: IndexPath) {
         movedCategories.isChanged = true
-        let category = movedCategories.array[fromIndexPath.row]
-        movedCategories.array.remove(at: fromIndexPath.row)
-        movedCategories.array.insert(category, at: toIndexPath.row)
+        let category = movedCategories.array[fromIndexPath.row];     let viewModel = tableData[fromIndexPath.row]
+        movedCategories.array.remove(at: fromIndexPath.row);         tableData.remove(at: fromIndexPath.row)
+        movedCategories.array.insert(category, at: toIndexPath.row); tableData.insert(viewModel, at: toIndexPath.row)
     }
     
     func editedDoneButtonTapped() {
@@ -124,7 +122,5 @@ extension CategoriesPresenter: TableDataSource {
         return tableData[indexPath.row]
     }
     
-    func numberOfRows() -> Int {
-        return tableData.count
-    }
+    func numberOfRows() -> Int { return tableData.count }
 }
